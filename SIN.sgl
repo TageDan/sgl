@@ -1,0 +1,30 @@
+#CONFIG#
+SCREEN_HEIGHT = 10
+SCREEN_WIDTH = 15
+SCREEN_BG = [0 0 0]
+SCREEN_CLEAR_DELAY = 0.05
+
+#FUNCTIONS#
+sin(X) = {
+    x = X%(3.14*2)
+    x-x**3/6+x**5/124
+    }
+
+#MAIN#
+t = 0
+loop {
+    clear()
+    x = 0
+    loop {
+        x = x + 1
+        y = sin(2*x/WIDTH+t)
+        draw(x y [255 255 255])
+        if x >= SCREEN_WIDTH{
+            break
+        }
+    }
+    t = t + 0.1
+    if t >= 10{
+        break
+    }
+}
