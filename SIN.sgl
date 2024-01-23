@@ -11,7 +11,7 @@ sin(X) = {
     }
 
 #MAIN#
-t = 0
+t = -((-0))
 loop {
     clear()
     x = 0

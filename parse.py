@@ -16,7 +16,7 @@ class Parser:
             # print(self.curToken)
             return True
         except IndexError:
-            return False
+            sys.exit("file parsed")
 
 
     def peek(self):
@@ -51,9 +51,10 @@ class Parser:
         self.nextToken()
         while self.curToken.type != tokenType.SECTION:
             self.NL()
-            if self.curToken.type != tokenType.SECTION:
-                self.nextToken()
-            
+            if self.curToken.type not in [tokenType.NAME, tokenType.SECTION]:
+                self.abort("Expected declaration in config")
+            if self.curToken.type == tokenType.SECTION: continue
+            self.declaration()
 
     def main(self):
         print("Section main")
@@ -209,9 +210,25 @@ class Parser:
         "if"
         self.nextToken()
         self.comparison()
+        if self.curToken.type != tokenType.LEFT_SQUIG:
+            self.abort("expected '{' after if statement")
+        self.nextToken()
+        if self.curToken.type != tokenType.NEWLINE:
+            self.abort("expected newline after if statement")
+        while self.curToken.type != tokenType.RIGHT_SQUIG:
+            self.NL()
+            self.statement()
+        self.nextToken()
+        self.NL()
 
     def comparison(self):
-        pass
+        print("comparison")
+        self.expression()
+        if self.curToken.type not in [tokenType.EQEQ, tokenType.LESS, tokenType.LESS_EQ, tokenType.GREAT, tokenType.GREAT_EQ, tokenType.NOTEQ]:
+            self.abort("Excpected comparison in if statement")
+        while self.curToken.type in [tokenType.EQEQ, tokenType.LESS, tokenType.LESS_EQ, tokenType.GREAT, tokenType.GREAT_EQ, tokenType.NOTEQ]:
+            self.nextToken()
+            self.expression()
 
     def loop(self):
         print("Statement - loop")
@@ -226,6 +243,8 @@ class Parser:
         while self.curToken.type != tokenType.RIGHT_SQUIG:
             self.statement()
             self.NL()
+        self.nextToken()
+        self.NL()
 
     def clear(self):
         print("Statement - clear")
