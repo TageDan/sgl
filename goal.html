@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" style="width: 500; height: 500;"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 100
+    SCREEN_GRIDSIZE = 5
+    SCREEN_WIDTH = 100
+    SCREEN_BG = [0,0,0]
+    SCREEN_CLEAR_DELAY = 0.1
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (ms) => {
+      const stop = new Date().getTime() + ms;
+      while (new Date().getTime() < stop) {}
+    }
+
+    function draw(x, y, col){
+        dx1 = Math.florr(x)
+        dx2 = Math.floor(x+1)
+        dy1 = Math.floor(y)
+        dy2 = Math.floor(y+1)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle('rgb('+col[0]+','+col[1]+','+col[2]+')')
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(dx1*SCREEN_GRIDSIZE,dy1*SCREEN_GRIDSIZE,dx2*SCREEN_GRIDSIZE,dy2*SCREEN_GRIDSIZE)
+    }
+
+    function clear(){
+        sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle('rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')')
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_HEIGHT*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+
+    
+
+
+</script>
+</body>
+</html>

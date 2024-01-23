@@ -23,7 +23,7 @@ class tokenType(enum.Enum):
     MOD = 15
     LEFT_SQUARE = 16
     RIGHT_SQUARE = 17
-    EXP = 18
+    EXP = 19
 
     #Types
     NUMBER = 100
@@ -54,7 +54,7 @@ class Lexer:
 
     def __init__(self, filePath):
         with open(filePath, "r") as source:
-            self.source = source.read()
+            self.source = source.read() + "\n"
         self.curChar = ""
         self.curPos = -1
         self.nextChar()
@@ -82,7 +82,8 @@ class Lexer:
             if self.peek() == "*":
                 self.nextChar()
                 token = Token(tokenType.EXP, "**")
-            token = Token(tokenType.MULTIPLY, "*")
+            else:
+                token = Token(tokenType.MULTIPLY, "*")
             
         elif self.curChar == "/":
             token = Token(tokenType.DIVIDE, "/")

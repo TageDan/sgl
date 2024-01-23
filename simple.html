@@ -1,0 +1,57 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "750" height = "500"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 100.0
+    SCREEN_GRIDSIZE = 5
+    SCREEN_WIDTH = 150.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.0
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+    function draw(x, y, col){
+        dx = Math.floor(x)
+        dy = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(dx*SCREEN_GRIDSIZE,dy*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    async function clear(){
+        await sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+function sin(X){
+x=parseInt(X*360/6.28)
+console.log(x)
+x=x%360
+console.log(x)
+x=x*6.28/360
+return (-(x-3.14))+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)
+}
+
+ const THISISTHEMAINFUNCTION = async () => {
+i=0
+await clear()
+while(true){
+y=sin(i/3)
+draw(i,SCREEN_HEIGHT/2+3*y,[255,0,255])
+if(i==50){
+break
+}i=i+1
+}console.log(11111111111)
+console.log(sin(0))} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>
