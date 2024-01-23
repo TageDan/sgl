@@ -1,0 +1,42 @@
+#CONFIG#
+SCREEN_HEIGHT = 250
+SCREEN_WIDTH = 400
+SCREEN_GRIDSIZE = 3
+SCREEN_BG = [0 0 0]
+SCREEN_CLEAR_DELAY = 0.02
+
+#FUNCTIONS#
+sin(X) = {
+    x = X
+    loop {
+        if x >= 0 {
+            break
+        }
+        x = 6.28 + x
+    }
+    x = x%6.28
+    -(x-3.14)+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+}
+
+#MAIN#
+
+t = 0
+loop {   
+    clear()
+    i = 0
+    loop {
+        y1 = sin(2*t)*3.5*sin(i+t*5)
+        y2 = (2-sin(t+0.2))*6*sin(i/3+t*3)
+
+        draw(i SCREEN_HEIGHT/4+y1 [0 0 255])
+        draw(i SCREEN_HEIGHT*2/4+y2 [0 255 0])
+        draw(i SCREEN_HEIGHT*3/4+y1+y2 [255 0 0])
+
+        if i == SCREEN_WIDTH {
+            break
+        }
+        i = i+1
+    }
+    t = t+0.1
+    t = t%6.28
+}

@@ -1,0 +1,68 @@
+#CONFIG#
+SCREEN_WIDTH = 300
+SCREEN_HEIGHT = 300
+SCREEN_BG = [0 0 0]
+SCREEN_CLEAR_DELAY = 0.05
+SCREEN_GRIDSIZE = 1
+
+#FUNCTIONS#
+
+appr(v) = {
+    (4*v*(180-v))/(40500-v*(180-v))
+}
+
+sin(X) = {
+    x = X
+    loop {
+        if x >= 0 {
+            break
+        }
+        x = 6.28 + x
+    }
+    x = x%6.28
+    x = x*360/6.28
+    if x >= 180{
+        -appr(x-180)
+    }
+    (appr(x))
+}
+
+cos(X) = {
+    ret = sin(3.14/2-X)
+    ret
+}
+
+#MAIN#
+
+mv = 0
+mv2 = 0
+loop{
+    clear()
+    i = 9
+    loop{
+        r = SCREEN_WIDTH/2 - i
+        v = 0
+        loop{
+            if v < mv{
+                draw(SCREEN_WIDTH/2+r*cos(v)/1.2 SCREEN_HEIGHT/2+r*sin(v)/1.2 [0 255 0])
+            }
+            if v < mv2{
+                draw(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 0 0])
+            }
+            if v > mv{
+                if v > mv2{
+                    break
+                }
+            }
+            v = v+0.01
+        }
+        if i == 10 {
+            break
+        }
+        i = i+1
+    }
+    mv = mv + 6.28/20
+    mv2 = mv2 + (6.28/20)/60
+    mv2 = mv2%6.28
+    mv = mv%6.28
+}

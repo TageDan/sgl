@@ -5,16 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        }
+
+        /* Add additional styles for your content here */
+    </style>
 </head>
-<body>
-    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "750" height = "500"></canvas>
+<body >
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "300" height = "300"></canvas>
 
     <script>
-    SCREEN_HEIGHT = 100.0
-    SCREEN_GRIDSIZE = 5
-    SCREEN_WIDTH = 150.0
+    SCREEN_HEIGHT = 300.0
+    SCREEN_GRIDSIZE = 1.0
+    SCREEN_WIDTH = 300.0
     SCREEN_BG = [0, 0, 0]
-    SCREEN_CLEAR_DELAY = 0.0
+    SCREEN_CLEAR_DELAY = 0.05
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
@@ -32,26 +44,52 @@
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
     }
+function appr(v){
+return (4*v*(180-v))/(40500-v*(180-v))
+}
 function sin(X){
-x=parseInt(X*360/6.28)
-console.log(x)
-x=x%360
-console.log(x)
-x=x*6.28/360
-return (-(x-3.14))+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)
+x=X
+while(true){
+if(x>=0){
+break
+}x=6.28+x
+}x=x%6.28
+x=x*360/6.28
+if(x>=180){
+return (-appr(x-180))
+}return (appr(x))
+}
+function cos(X){
+ret=sin(3.14/2-X)
+return ret
 }
 
  const THISISTHEMAINFUNCTION = async () => {
-i=0
-await clear()
+mv=0
+mv2=0
 while(true){
-y=sin(i/3)
-draw(i,SCREEN_HEIGHT/2+3*y,[255,0,255])
-if(i==50){
+await clear()
+i=9
+while(true){
+r=SCREEN_WIDTH/2-i
+v=0
+while(true){
+if(v<mv){
+draw(SCREEN_WIDTH/2+r*cos(v)/1.2,SCREEN_HEIGHT/2+r*sin(v)/1.2,[0,255,0])
+}if(v<mv2){
+draw(SCREEN_WIDTH/2+r*cos(v),SCREEN_HEIGHT/2+r*sin(v),[255,0,0])
+}if(v>mv){
+if(v>mv2){
+break
+}}v=v+0.01
+}if(i==10){
 break
 }i=i+1
-}console.log(11111111111)
-console.log(sin(0))} 
+}mv=mv+6.28/20
+mv2=mv2+(6.28/20)/60
+mv2=mv2%6.28
+mv=mv%6.28
+}} 
  THISISTHEMAINFUNCTION()</script>
 </body>
 </html>

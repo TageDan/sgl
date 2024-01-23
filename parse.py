@@ -263,7 +263,7 @@ class Parser:
         self.generator.write_to_buffer(")")
 
     def loop(self):
-        "loop"
+        print(self.line)
         self.generator.write_to_buffer("while(true)")
         self.nextToken()
         if self.curToken.type != tokenType.LEFT_SQUIG:
@@ -277,6 +277,7 @@ class Parser:
         while self.curToken.type != tokenType.RIGHT_SQUIG:
             self.statement()
             self.NL()
+        print(self.line)
         self.writeCurToBuf()
         self.nextToken()
         self.NL()

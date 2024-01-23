@@ -1,0 +1,44 @@
+#CONFIG#
+SCREEN_WIDTH = 300
+SCREEN_HEIGHT = 300
+SCREEN_BG = [0 0 0]
+SCREEN_CLEAR_DELAY = 0
+SCREEN_GRIDSIZE = 1
+
+#FUNCTIONS#
+sin(X) = {
+    x = X
+    loop {
+        if x >= 0 {
+            break
+        }
+        x = 6.28 + x
+    }
+    x = x%6.28
+    -(x-3.14)+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+}
+
+cos(X) = {
+    ret = sin(3.14/2-X)
+    ret
+}
+
+#MAIN#
+
+i = 5
+clear()
+loop{
+r = SCREEN_WIDTH/2 - i
+v = 0
+loop{
+    draw(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 255 255])
+    if v > 6.28{
+        break
+    }
+    v = v+0.001
+}
+if i == 10 {
+    break
+}
+i = i+1
+}

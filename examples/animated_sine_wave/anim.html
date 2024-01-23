@@ -1,0 +1,76 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        }
+
+        /* Add additional styles for your content here */
+    </style>
+</head>
+<body >
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "1200" height = "750"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 250.0
+    SCREEN_GRIDSIZE = 3.0
+    SCREEN_WIDTH = 400.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.02
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+    function draw(x, y, col){
+        dx = Math.floor(x)
+        dy = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(dx*SCREEN_GRIDSIZE,dy*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    async function clear(){
+        await sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+function sin(X){
+x=X
+while(true){
+if(x>=0){
+break
+}x=6.28+x
+}x=x%6.28
+return (-(x-3.14))+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+}
+
+ const THISISTHEMAINFUNCTION = async () => {
+t=0
+while(true){
+await clear()
+i=0
+while(true){
+y1=sin(2*t)*3.5*sin(i+t*5)
+y2=(2-sin(t+0.2))*6*sin(i/3+t*3)
+draw(i,SCREEN_HEIGHT/4+y1,[0,0,255])
+draw(i,SCREEN_HEIGHT*2/4+y2,[0,255,0])
+draw(i,SCREEN_HEIGHT*3/4+y1+y2,[255,0,0])
+if(i==SCREEN_WIDTH){
+break
+}i=i+1
+}t=t+0.1
+t=t%6.28
+}} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>

@@ -40,8 +40,20 @@ class Generator:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {'{'}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        {'}'}
+
+        /* Add additional styles for your content here */
+    </style>
 </head>
-<body>
+<body >
     <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "{int(self.configvars["SCREEN_GRIDSIZE"]*self.configvars["SCREEN_WIDTH"])}" height = "{int(self.configvars["SCREEN_HEIGHT"]*self.configvars["SCREEN_GRIDSIZE"])}"></canvas>
 
     <script>

@@ -1,0 +1,26 @@
+#CONFIG#
+SCREEN_HEIGHT = 150
+SCREEN_WIDTH = 750
+SCREEN_GRIDSIZE = 1
+SCREEN_BG = [0 0 0]
+SCREEN_CLEAR_DELAY = 0
+
+#FUNCTIONS#
+sin(X) = {
+    x = X%6.28
+    -(x-3.14)+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+}
+
+#MAIN#
+i = 0
+clear()
+loop {   
+
+    y = sin(i/20)
+    draw(i SCREEN_HEIGHT/2+(SCREEN_HEIGHT-40)/2*y [255 0 255])
+
+    if i == SCREEN_WIDTH {
+        break
+    }
+    i = i+1
+}

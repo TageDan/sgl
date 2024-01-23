@@ -1,0 +1,78 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        }
+
+        /* Add additional styles for your content here */
+    </style>
+</head>
+<body >
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "300" height = "300"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 300.0
+    SCREEN_GRIDSIZE = 1.0
+    SCREEN_WIDTH = 300.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.0
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+    function draw(x, y, col){
+        dx = Math.floor(x)
+        dy = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(dx*SCREEN_GRIDSIZE,dy*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    async function clear(){
+        await sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+function sin(X){
+x=X
+while(true){
+if(x>=0){
+break
+}x=6.28+x
+}x=x%6.28
+return (-(x-3.14))+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+}
+function cos(X){
+ret=sin(3.14/2-X)
+return ret
+}
+
+ const THISISTHEMAINFUNCTION = async () => {
+i=5
+await clear()
+while(true){
+r=SCREEN_WIDTH/2-i
+v=0
+while(true){
+draw(SCREEN_WIDTH/2+r*cos(v),SCREEN_HEIGHT/2+r*sin(v),[255,255,255])
+if(v>6.28){
+break
+}v=v+0.001
+}if(i==10){
+break
+}i=i+1
+}} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>
