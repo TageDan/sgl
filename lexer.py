@@ -41,6 +41,10 @@ class tokenType(enum.Enum):
     BREAK = 206
     PUSH = 207
     PRINT = 208
+    RANDOM = 209
+    FLOOR = 210
+    SHOW = 211
+    DRAWFILL = 212
 
 class Token:
     def __init__(self, type: tokenType, literal):

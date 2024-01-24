@@ -120,6 +120,8 @@ class Parser:
     def statement(self):
         if self.curToken.type == tokenType.DRAW:
             self.draw()
+        elif self.curToken.type == tokenType.DRAWFILL:
+            self.drawfill()
         elif self.curToken.type == tokenType.NAME:
             if self.peek().type == tokenType.EQ:
                 self.declaration()
@@ -146,13 +148,20 @@ class Parser:
             self.BREAK()
         elif self.curToken.type == tokenType.PRINT:
             self.print()
+        elif self.curToken.type == tokenType.SHOW:
+            self.show()
         else:
             self.abort(f"Unexcpected statement ('{self.curToken.literal}')")
 
         self.generator.buffer_to_body()
 
     def functionCall(self):
-        self.writeCurToBuf()
+        if self.curToken.type == tokenType.RANDOM:
+            self.generator.write_to_buffer("Math.random")
+        elif self.curToken.type == tokenType.FLOOR:
+            self.generator.write_to_buffer("Math.floor")
+        else:
+            self.writeCurToBuf()
         self.nextToken()
         self.writeCurToBuf()
         self.nextToken()
@@ -357,16 +366,55 @@ class Parser:
             self.abort("Expected left paren for draw statement")
         self.writeCurToBuf()
         self.nextToken()
+        for i in range(2):
+            self.expression()
+            if i != 1:
+                self.generator.write_to_buffer(",")
+        if self.curToken.type != tokenType.RIGHT_PAREN:
+            self.abort("Expected right paren for draw statement, (draw takes exactly 2 params)")
+        self.writeCurToBuf()
+        self.nextToken()
+        if self.curToken.type != tokenType.NEWLINE:
+            self.abort("Expected newline after draw")
+        self.writeCurToBuf()
+        self.NL()
+
+    def drawfill(self):
+        "drawfill"
+        self.writeCurToBuf()
+        self.nextToken()
+        if self.curToken.type != tokenType.LEFT_PAREN:
+            self.abort("Expected left paren for drawfill statement")
+        self.writeCurToBuf()
+        self.nextToken()
         for i in range(3):
             self.expression()
             if i != 2:
                 self.generator.write_to_buffer(",")
         if self.curToken.type != tokenType.RIGHT_PAREN:
-            self.abort("Expected right paren for draw statement, (draw takes exactly 3 params)")
+            self.abort("Expected right paren for drawfill statement, (drawfill takes exactly 3 params)")
         self.writeCurToBuf()
         self.nextToken()
         if self.curToken.type != tokenType.NEWLINE:
-            self.abort("Expected newline after draw")
+            self.abort("Expected newline after drawfill")
+        self.writeCurToBuf()
+        self.NL()
+
+    def show(self):
+        "show"
+        self.writeCurToBuf()
+        self.nextToken()
+        if self.curToken.type != tokenType.LEFT_PAREN:
+            self.abort("Expected left paren for show statement")
+        self.writeCurToBuf()
+        self.nextToken()
+        self.expression()
+        if self.curToken.type != tokenType.RIGHT_PAREN:
+            self.abort("Expected right paren for show statement, (show takes exactly 1 params)")
+        self.writeCurToBuf()
+        self.nextToken()
+        if self.curToken.type != tokenType.NEWLINE:
+            self.abort("Expected newline after show")
         self.writeCurToBuf()
         self.NL()
         

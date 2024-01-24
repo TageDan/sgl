@@ -26,24 +26,43 @@
     SCREEN_GRIDSIZE = 1.0
     SCREEN_WIDTH = 300.0
     SCREEN_BG = [0, 0, 0]
-    SCREEN_CLEAR_DELAY = 0.05
+    SCREEN_CLEAR_DELAY = 0.0333
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-    function draw(x, y, col){
+    function draw(x, y){
         dx = Math.floor(x)
         dy = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.rect(dx*SCREEN_GRIDSIZE,dy*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    function drawfill(x, y, col){
+        dx = Math.floor(x)
+        dy = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(dx*SCREEN_GRIDSIZE,dy*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
     }
 
     async function clear(){
         await sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
     }
+
+    function show(col){
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fill();
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
+    }
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
 function appr(v){
 return (4*v*(180-v))/(40500-v*(180-v))
 }
@@ -69,24 +88,24 @@ mv=0
 mv2=0
 while(true){
 await clear()
-i=9
+i=2
 while(true){
 r=SCREEN_WIDTH/2-i
 v=0
 while(true){
 if(v<mv){
-draw(SCREEN_WIDTH/2+r*cos(v)/1.2,SCREEN_HEIGHT/2+r*sin(v)/1.2,[0,255,0])
+drawfill(SCREEN_WIDTH/2+r*cos(v)/1.2,SCREEN_HEIGHT/2+r*sin(v)/1.2,[0,255,0])
 }if(v<mv2){
-draw(SCREEN_WIDTH/2+r*cos(v),SCREEN_HEIGHT/2+r*sin(v),[255,0,0])
+drawfill(SCREEN_WIDTH/2+r*cos(v),SCREEN_HEIGHT/2+r*sin(v),[255,0,0])
 }if(v>mv){
 if(v>mv2){
 break
-}}v=v+0.01
+}}v=v+0.005
 }if(i==10){
 break
 }i=i+1
-}mv=mv+6.28/20
-mv2=mv2+(6.28/20)/60
+}mv=mv+6.28/30
+mv2=mv2+(6.28/30)/60
 mv2=mv2%6.28
 mv=mv%6.28
 }} 

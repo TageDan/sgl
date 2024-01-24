@@ -17,7 +17,7 @@ clear()
 loop {   
 
     y = sin(i/20)
-    draw(i SCREEN_HEIGHT/2+(SCREEN_HEIGHT-40)/2*y [255 0 255])
+    drawfill(i SCREEN_HEIGHT/2+(SCREEN_HEIGHT-40)/2*y [255 0 255])
 
     if i == SCREEN_WIDTH {
         break

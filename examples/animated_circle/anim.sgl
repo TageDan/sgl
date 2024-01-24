@@ -2,7 +2,7 @@
 SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 300
 SCREEN_BG = [0 0 0]
-SCREEN_CLEAR_DELAY = 0.05
+SCREEN_CLEAR_DELAY = 0.0333
 SCREEN_GRIDSIZE = 1
 
 #FUNCTIONS#
@@ -38,31 +38,31 @@ mv = 0
 mv2 = 0
 loop{
     clear()
-    i = 9
+    i = 2
     loop{
         r = SCREEN_WIDTH/2 - i
         v = 0
         loop{
             if v < mv{
-                draw(SCREEN_WIDTH/2+r*cos(v)/1.2 SCREEN_HEIGHT/2+r*sin(v)/1.2 [0 255 0])
+                drawfill(SCREEN_WIDTH/2+r*cos(v)/1.2 SCREEN_HEIGHT/2+r*sin(v)/1.2 [0 255 0])
             }
             if v < mv2{
-                draw(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 0 0])
+                drawfill(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 0 0])
             }
             if v > mv{
                 if v > mv2{
                     break
                 }
             }
-            v = v+0.01
+            v = v+0.005
         }
         if i == 10 {
             break
         }
         i = i+1
     }
-    mv = mv + 6.28/20
-    mv2 = mv2 + (6.28/20)/60
+    mv = mv + 6.28/30
+    mv2 = mv2 + (6.28/30)/60
     mv2 = mv2%6.28
     mv = mv%6.28
 }
