@@ -1,0 +1,148 @@
+#CONFIG#
+SCREEN_HEIGHT = 120
+SCREEN_WIDTH = 160
+SCREEN_BG = [0 0 0]
+SCREEN_GRIDSIZE = 5
+SCREEN_CLEAR_DELAY = 0.05
+
+#FUNCTIONS#
+
+appr(v) = {
+    (4*v*(180-v))/(40500-v*(180-v))
+}
+
+sin(X) = {
+    x = X
+    loop {
+        if x >= 0 {
+            break
+        }
+        x = 6.28 + x
+    }
+    x = x%6.28
+    x = x*360/6.28
+    if x >= 180{
+        -appr(x-180)
+    }
+    (appr(x))
+}
+
+cos(X) = {
+    ret = sin(3.14/2-X)
+    ret
+}
+
+drawLine(x1 y1 x2 y2 col) = {
+    x = x1
+    y = y1
+    if x2 == x1 {
+        if y2 < y1 {
+            y = y2
+            y2 = y1
+        }
+        loop {
+            drawfill(x y col)
+            if y >= y2 {
+                break
+            }
+            y = y+ 0.5
+        }
+        0
+    }
+
+
+    dx = 0.1
+
+    dy = ((y2 - y1)/(x2-x1))*dx
+    if x1 > x2 {
+        x = x2
+        x2 = x1
+        y = y2
+    }
+
+    loop {
+        drawfill(x y col)
+        if x > x2 {
+            break
+        }
+        x = x+ dx
+        y = y+ dy
+    }
+}
+
+lerpStp(x target itr) = {
+    (target - x)/itr
+}
+
+fillTriangle(x1 y1 x2 y2 x3 y3 col) = {
+    itr = 20
+    i = 0
+    x = x1
+    y = y1
+    dx = lerpStp(x x2 itr)
+    dy = lerpStp(y y2 itr)
+    loop {
+        a = x3
+        b = y3
+        drawLine(x y a b col)
+        drawfill(x y [255 255 255])
+        x = x + dx
+        y = y + dy
+        i = i+1
+        if i == itr {
+            break
+        }
+    }
+    i = 0
+    x = x2
+    y = y2
+    dx = lerpStp(x x3 itr)
+    dy = lerpStp(y y3 itr)
+    loop {
+        a = x1
+        b = y1
+        drawLine(x y a b col)
+        drawfill(x y [255 255 255])
+        x = x + dx
+        y = y + dy
+        i = i+1
+        if i == itr {
+            break
+        }
+    }
+    i = 0
+    x = x3
+    y = y3
+    dx = lerpStp(x x1 itr)
+    print(x)
+    print(x1)
+    print(dx)
+    dy = lerpStp(y y1 itr)
+    loop {
+        a = x2
+        b = y2
+        drawLine(x y a b col)
+        drawfill(x y [255 255 255])
+        x = x + dx
+        y = y + dy
+        i = i+1
+        if i == itr {
+            break
+        }
+    }
+    0
+}
+
+
+#MAIN#
+
+p1x = 50
+p2x = 10
+p3x = 150
+p1y = 10
+p2y = 75
+p3y = 100
+
+clear()
+
+fillTriangle(p1x p1y p2x p2y p3x p3y [255 0 0])

@@ -1,39 +1,4 @@
-import json
 
-
-class Generator:
-
-    def __init__(self, path):
-        self.path = path
-        self.functionbody = ""
-        self.configbody = ""
-        self.mainbody = ""
-        self.configvars = {"SCREEN_HEIGHT": 100, "SCREEN_WIDTH": 100, "SCREEN_BG": [0,0,0], "SCREEN_CLEAR_DELAY":0, "SCREEN_GRIDSIZE": 5}
-        self.section = "none"
-        self.buffer = ""
-        self.footer = "</script>\n</body>\n</html>\n"
-
-    def set_section(self, section):
-        self.section = section
-
-    def write_to_buffer(self, stri):
-        self.buffer += stri
-
-    def buffer_to_body(self):
-        if self.section == "CONFIG":
-            buf = self.buffer
-            try:
-                self.configvars[buf.split("=")[0]] = float(buf.split("=")[1])
-            except:
-                self.configvars[buf.split("=")[0]] = json.loads(buf.split("=")[1])
-        elif self.section == "FUNCTIONS":
-            self.functionbody += self.buffer
-        elif self.section == "MAIN":
-            self.mainbody += self.buffer
-        self.buffer = ""
-
-    def write_to_file(self):
-        self.configbody = f"""
         <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,65 +6,91 @@ class Generator:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {'{'}
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh; /* This ensures the content is centered vertically on the page */
             margin: 0; /* Removes default margin */
             background-color: #f5f5dc;
-        {'}'}
+        }
 
         /* Add additional styles for your content here */
     </style>
 </head>
 <body >
-    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "{int(self.configvars["SCREEN_GRIDSIZE"]*self.configvars["SCREEN_WIDTH"])}" height = "{int(self.configvars["SCREEN_HEIGHT"]*self.configvars["SCREEN_GRIDSIZE"])}"></canvas>
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "900" height = "900"></canvas>
 
     <script>
-    SCREEN_HEIGHT = {self.configvars["SCREEN_HEIGHT"]}
-    SCREEN_GRIDSIZE = {self.configvars["SCREEN_GRIDSIZE"]}
-    SCREEN_WIDTH = {self.configvars["SCREEN_WIDTH"]}
-    SCREEN_BG = {self.configvars["SCREEN_BG"]}
-    SCREEN_CLEAR_DELAY = {self.configvars["SCREEN_CLEAR_DELAY"]}
+    SCREEN_HEIGHT = 900.0
+    SCREEN_GRIDSIZE = 1.0
+    SCREEN_WIDTH = 900.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.0
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-    function draw(x, y){'{'}
+    function draw(x, y){
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
         DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.rect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
-    {'}'}
+    }
 
-    function drawfill(x, y, col){'{'}
+    function drawfill(x, y, col){
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
         DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    {'}'}
+    }
 
-    async function clear(){'{'}
+    async function clear(){
         await sleep(SCREEN_CLEAR_DELAY*1000)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    {'}'}
+    }
 
-    function show(col){'{'}
+    function show(col){
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fill();
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    {'}'}
+    }
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-"""
+function lerpY(y,p){
+console.log(p)
+if(p<1){
+return y/2+SCREEN_HEIGHT/2
+}return y/2
+}
+function lerpX(x,p){
+if(p<1){
+return x/2+SCREEN_WIDTH/4
+}if(p<2){
+return x/2
+}return x/2+SCREEN_WIDTH/2
+}
 
-        with open(self.path, "w+") as f:
-            f.write(self.configbody + self.functionbody + "\n const THISISTHEMAINFUNCTION = async () => {\n"+self.mainbody+"} \n THISISTHEMAINFUNCTION()" + self.footer)
-
+ const THISISTHEMAINFUNCTION = async () => {
+x=Math.random()*SCREEN_WIDTH
+y=Math.random()*SCREEN_HEIGHT
+i=100000
+await clear()
+while(true){
+draw(x,SCREEN_HEIGHT-y)
+p=Math.random()*3
+x=lerpX(x,p)
+y=lerpY(y,p)
+i=i-1
+if(i==0){
+break
+}}show([255,255,255])} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>

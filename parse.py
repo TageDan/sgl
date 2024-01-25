@@ -10,6 +10,7 @@ class Parser:
         self.section = "none"
         self.line = 1
         self.generator = generator
+        self.declared = []
 
     def nextToken(self):
         self.curPos += 1
@@ -84,6 +85,7 @@ class Parser:
                 self.abort("Excpected function declaration in section FUNCTIONS")
             
     def functionDeclaration(self):
+        self.declared = []
         self.generator.write_to_buffer("function ")
         self.writeCurToBuf()
         self.nextToken()
@@ -94,6 +96,7 @@ class Parser:
             self.nextToken()
             if self.curToken.type != tokenType.NAME:
                 self.abort("Expected name token for function parameter")
+            self.declared.append(self.curToken.literal)
             self.writeCurToBuf()
             if self.peek().type != tokenType.RIGHT_PAREN:
                 self.generator.write_to_buffer(",")
@@ -105,6 +108,7 @@ class Parser:
         self.nextToken()
         if self.curToken.type != tokenType.LEFT_SQUIG:
             self.abort("Expected '{' in function declaration")
+        
         self.writeCurToBuf()
         if self.peek().type != tokenType.NEWLINE:
             self.abort("Expected newline after function declaration")
@@ -113,6 +117,7 @@ class Parser:
         while self.curToken.type != tokenType.RIGHT_SQUIG:
             self.NL()
             self.statement()
+        
         self.writeCurToBuf()
         self.generator.write_to_buffer("\n")
         self.nextToken()
@@ -156,9 +161,9 @@ class Parser:
         self.generator.buffer_to_body()
 
     def functionCall(self):
-        if self.curToken.type == tokenType.RANDOM:
+        if self.curToken.literal == "random":
             self.generator.write_to_buffer("Math.random")
-        elif self.curToken.type == tokenType.FLOOR:
+        elif self.curToken.literal == "floor":
             self.generator.write_to_buffer("Math.floor")
         else:
             self.writeCurToBuf()
@@ -167,10 +172,16 @@ class Parser:
         self.nextToken()
         while self.curToken.type != tokenType.RIGHT_PAREN:
             self.expression()
+            if self.curToken.type != tokenType.RIGHT_PAREN:
+                self.generator.write_to_buffer(",")
         self.writeCurToBuf()
 
     def declaration(self):
         "ident"
+        if self.section == "FUNCTIONS":
+            if self.curToken.literal not in self.declared:
+                self.declared.append(self.curToken.literal)
+                self.generator.write_to_buffer("let ")
         self.writeCurToBuf()
         self.nextToken()
         "="
@@ -220,7 +231,7 @@ class Parser:
             self.writeCurToBuf()
             self.nextToken()
         else:
-            self.abort("Expected name or number as unary")
+            self.abort(f"Expected name or number as unary, got ({self.curToken})")
         if neg:
             self.generator.write_to_buffer(")")
     
@@ -248,14 +259,17 @@ class Parser:
         self.comparison()
         if self.curToken.type != tokenType.LEFT_SQUIG:
             self.abort("expected '{' after if statement")
+        
         self.writeCurToBuf()
         self.nextToken()
         if self.curToken.type != tokenType.NEWLINE:
             self.abort("expected newline after if statement")
         self.writeCurToBuf()
+        self.NL()
         while self.curToken.type != tokenType.RIGHT_SQUIG:
-            self.NL()
             self.statement()
+            self.NL()
+        
         self.writeCurToBuf()
         self.nextToken()
         self.NL()
@@ -272,11 +286,11 @@ class Parser:
         self.generator.write_to_buffer(")")
 
     def loop(self):
-        print(self.line)
         self.generator.write_to_buffer("while(true)")
         self.nextToken()
         if self.curToken.type != tokenType.LEFT_SQUIG:
             self.abort("Expected '{' in loop statement")
+        
         self.writeCurToBuf()
         self.nextToken()
         if self.curToken.type != tokenType.NEWLINE:
@@ -286,7 +300,7 @@ class Parser:
         while self.curToken.type != tokenType.RIGHT_SQUIG:
             self.statement()
             self.NL()
-        print(self.line)
+        
         self.writeCurToBuf()
         self.nextToken()
         self.NL()

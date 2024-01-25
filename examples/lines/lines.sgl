@@ -1,0 +1,116 @@
+#CONFIG#
+SCREEN_HEIGHT = 500
+SCREEN_WIDTH = 800
+SCREEN_BG = [0 0 0]
+SCREEN_GRIDSIZE = 1
+SCREEN_CLEAR_DELAY = 0.05
+
+#FUNCTIONS#
+
+appr(v) = {
+    (4*v*(180-v))/(40500-v*(180-v))
+}
+
+sin(X) = {
+    x = X
+    loop {
+        if x >= 0 {
+            break
+        }
+        x = 6.28 + x
+    }
+    x = x%6.28
+    x = x*360/6.28
+    if x >= 180{
+        -appr(x-180)
+    }
+    (appr(x))
+}
+
+cos(X) = {
+    ret = sin(3.14/2-X)
+    ret
+}
+
+drawLine(x1 y1 x2 y2 col) = {
+    x = x1
+    y = y1
+    if x2 == x1 {
+        if y2 < y1 {
+            y = y2
+            y2 = y1
+        }
+        loop {
+            drawfill(x y col)
+            if y >= y2 {
+                break
+            }
+            y = y+ 0.5
+        }
+        0
+    }
+
+
+    dx = 0.1
+
+    dy = ((y2 - y1)/(x2-x1))*dx
+    if x1 > x2 {
+        x = x2
+        x2 = x1
+        y = y2
+    }
+
+    loop {
+        drawfill(x y col)
+        if x > x2 {
+            break
+        }
+        x = x+ dx
+        y = y+ dy
+    }
+}
+
+#MAIN#
+
+x1 = 0
+y1 = 0
+x2 = 0
+y2 = SCREEN_HEIGHT/2
+x3 = 0
+y3 = SCREEN_HEIGHT
+x4 = SCREEN_WIDTH/2
+y4 = 0
+x5 = SCREEN_WIDTH/2
+y5 = SCREEN_HEIGHT
+x6 = SCREEN_WIDTH
+y6 = 0
+x7 = SCREEN_WIDTH
+y7 = SCREEN_HEIGHT/2
+x8 = SCREEN_WIDTH
+y8 = SCREEN_HEIGHT
+
+v = 0
+
+loop {
+    clear()
+    squareW = 1
+    squareWX = squareW/100*SCREEN_WIDTH
+    squareWY = squareW/100*SCREEN_HEIGHT
+    X = SCREEN_WIDTH/2 + cos(v)*SCREEN_WIDTH/4
+    Y = SCREEN_HEIGHT/2 + sin(v)*SCREEN_HEIGHT/4
+    drawLine(x1 y1 X-squareWX Y-squareWY [0 0 255])
+    drawLine(x2 y2 X-squareWX Y [50 100 155])
+    drawLine(x3 y3 X-squareWX Y+squareWY [50 155 100])
+    drawLine(x4 y4 X Y-squareWY [100 50 155])
+    drawLine(x5 y5 X Y+squareWY [0 255 0])
+    drawLine(x6 y6 X+squareWX Y-squareWY [155 50 100])
+    drawLine(x7 y7 X+squareWX Y [255 0 0])
+    drawLine(x8 y8 X+squareWX Y+squareWY [125 125 50])
+    drawLine(X-squareWX Y-squareWY X+squareWX Y-squareWY [255 255 255])
+    drawLine(X+squareWX Y-squareWY X+squareWX Y+squareWY [255 255 255])
+    drawLine(X+squareWX Y+squareWY X-squareWX Y+squareWY [255 255 255])
+    drawLine(X-squareWX Y+squareWY X-squareWX Y-squareWY [255 255 255])
+
+    v = v+0.02
+    v = v%6.28
+}

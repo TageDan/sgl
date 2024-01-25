@@ -1,39 +1,4 @@
-import json
 
-
-class Generator:
-
-    def __init__(self, path):
-        self.path = path
-        self.functionbody = ""
-        self.configbody = ""
-        self.mainbody = ""
-        self.configvars = {"SCREEN_HEIGHT": 100, "SCREEN_WIDTH": 100, "SCREEN_BG": [0,0,0], "SCREEN_CLEAR_DELAY":0, "SCREEN_GRIDSIZE": 5}
-        self.section = "none"
-        self.buffer = ""
-        self.footer = "</script>\n</body>\n</html>\n"
-
-    def set_section(self, section):
-        self.section = section
-
-    def write_to_buffer(self, stri):
-        self.buffer += stri
-
-    def buffer_to_body(self):
-        if self.section == "CONFIG":
-            buf = self.buffer
-            try:
-                self.configvars[buf.split("=")[0]] = float(buf.split("=")[1])
-            except:
-                self.configvars[buf.split("=")[0]] = json.loads(buf.split("=")[1])
-        elif self.section == "FUNCTIONS":
-            self.functionbody += self.buffer
-        elif self.section == "MAIN":
-            self.mainbody += self.buffer
-        self.buffer = ""
-
-    def write_to_file(self):
-        self.configbody = f"""
         <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,65 +6,149 @@ class Generator:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {'{'}
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh; /* This ensures the content is centered vertically on the page */
             margin: 0; /* Removes default margin */
             background-color: #f5f5dc;
-        {'}'}
+        }
 
         /* Add additional styles for your content here */
     </style>
 </head>
 <body >
-    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "{int(self.configvars["SCREEN_GRIDSIZE"]*self.configvars["SCREEN_WIDTH"])}" height = "{int(self.configvars["SCREEN_HEIGHT"]*self.configvars["SCREEN_GRIDSIZE"])}"></canvas>
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "800" height = "500"></canvas>
 
     <script>
-    SCREEN_HEIGHT = {self.configvars["SCREEN_HEIGHT"]}
-    SCREEN_GRIDSIZE = {self.configvars["SCREEN_GRIDSIZE"]}
-    SCREEN_WIDTH = {self.configvars["SCREEN_WIDTH"]}
-    SCREEN_BG = {self.configvars["SCREEN_BG"]}
-    SCREEN_CLEAR_DELAY = {self.configvars["SCREEN_CLEAR_DELAY"]}
+    SCREEN_HEIGHT = 500.0
+    SCREEN_GRIDSIZE = 1.0
+    SCREEN_WIDTH = 800.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.05
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-    function draw(x, y){'{'}
+    function draw(x, y){
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
         DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.rect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
-    {'}'}
+    }
 
-    function drawfill(x, y, col){'{'}
+    function drawfill(x, y, col){
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
         DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    {'}'}
+    }
 
-    async function clear(){'{'}
+    async function clear(){
         await sleep(SCREEN_CLEAR_DELAY*1000)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    {'}'}
+    }
 
-    function show(col){'{'}
+    function show(col){
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fill();
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    {'}'}
+    }
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-"""
+function appr(v){
+return (4*v*(180-v))/(40500-v*(180-v))
+}
+function sin(X){
+x=X
+while(true){
+if(x>=0){
+break
+}x=6.28+x
+}x=x%6.28
+x=x*360/6.28
+if(x>=180){
+return (-appr(x-180))
+}return (appr(x))
+}
+function cos(X){
+ret=sin(3.14/2-X)
+return ret
+}
+function drawLine(x1,y1,x2,y2,col){
+x=x1
+y=y1
+if(x2==x1){
+if(y2<y1){
+y=y2
+y2=y1
+}while(true){
+drawfill(x,y,col)
+if(y>=y2){
+break
+}y=y+0.5
+}return 0
+}dx=0.1
+dy=((y2-y1)/(x2-x1))*dx
+if(x1>x2){
+x=x2
+x2=x1
+y=y2
+}while(true){
+drawfill(x,y,col)
+if(x>x2){
+break
+}x=x+dx
+y=y+dy
+}}
 
-        with open(self.path, "w+") as f:
-            f.write(self.configbody + self.functionbody + "\n const THISISTHEMAINFUNCTION = async () => {\n"+self.mainbody+"} \n THISISTHEMAINFUNCTION()" + self.footer)
-
+ const THISISTHEMAINFUNCTION = async () => {
+x1=0
+y1=0
+x2=0
+y2=SCREEN_HEIGHT/2
+x3=0
+y3=SCREEN_HEIGHT
+x4=SCREEN_WIDTH/2
+y4=0
+x5=SCREEN_WIDTH/2
+y5=SCREEN_HEIGHT
+x6=SCREEN_WIDTH
+y6=0
+x7=SCREEN_WIDTH
+y7=SCREEN_HEIGHT/2
+x8=SCREEN_WIDTH
+y8=SCREEN_HEIGHT
+v=0
+while(true){
+await clear()
+squareW=1
+squareWX=squareW/100*SCREEN_WIDTH
+squareWY=squareW/100*SCREEN_HEIGHT
+X=SCREEN_WIDTH/2+cos(v)*SCREEN_WIDTH/4
+Y=SCREEN_HEIGHT/2+sin(v)*SCREEN_HEIGHT/4
+drawLine(x1,y1,X-squareWX,Y-squareWY,[0,0,255])
+drawLine(x2,y2,X-squareWX,Y,[50,100,155])
+drawLine(x3,y3,X-squareWX,Y+squareWY,[50,155,100])
+drawLine(x4,y4,X,Y-squareWY,[100,50,155])
+drawLine(x5,y5,X,Y+squareWY,[0,255,0])
+drawLine(x6,y6,X+squareWX,Y-squareWY,[155,50,100])
+drawLine(x7,y7,X+squareWX,Y,[255,0,0])
+drawLine(x8,y8,X+squareWX,Y+squareWY,[125,125,50])
+drawLine(X-squareWX,Y-squareWY,X+squareWX,Y-squareWY,[255,255,255])
+drawLine(X+squareWX,Y-squareWY,X+squareWX,Y+squareWY,[255,255,255])
+drawLine(X+squareWX,Y+squareWY,X-squareWX,Y+squareWY,[255,255,255])
+drawLine(X-squareWX,Y+squareWY,X-squareWX,Y-squareWY,[255,255,255])
+v=v+0.02
+v=v%6.28
+}} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>
