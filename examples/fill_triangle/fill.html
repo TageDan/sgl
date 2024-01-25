@@ -19,12 +19,12 @@
     </style>
 </head>
 <body >
-    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "800" height = "600"></canvas>
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "1000" height = "800"></canvas>
 
     <script>
-    SCREEN_HEIGHT = 120.0
-    SCREEN_GRIDSIZE = 5.0
-    SCREEN_WIDTH = 160.0
+    SCREEN_HEIGHT = 800.0
+    SCREEN_GRIDSIZE = 1.0
+    SCREEN_WIDTH = 1000.0
     SCREEN_BG = [0, 0, 0]
     SCREEN_CLEAR_DELAY = 0.05
 
@@ -82,38 +82,22 @@ function cos(X){
 let ret=sin(3.14/2-X)
 return ret
 }
-function drawLine(x1,y1,x2,y2,col){
-let x=x1
-let y=y1
-if(x2==x1){
-if(y2<y1){
-y=y2
-y2=y1
-}while(true){
-drawfill(x,y,col)
-if(y>=y2){
-break
-}y=y+0.5
-}return 0
-}let dx=0.1
-let dy=((y2-y1)/(x2-x1))*dx
-if(x1>x2){
-x=x2
-x2=x1
-y=y2
-}while(true){
-drawfill(x,y,col)
-if(x>x2){
-break
-}x=x+dx
-y=y+dy
-}}
 function lerpStp(x,target,itr){
 return (target-x)/itr
 }
-function fillTriangle(x1,y1,x2,y2,x3,y3,col){
-let itr=20
+function drawLine(x1,y1,x2,y2,col){
+let dx=lerpStp(x1,x2,500)
+let dy=lerpStp(y1,y2,500)
 let i=0
+while(true){
+drawfill(x1+dx*i,y1+dy*i,col)
+i=i+1
+if(i>500){
+break
+}}}
+function fillTriangle(x1,y1,x2,y2,x3,y3,col,sa){
+let itr=sa
+let i=1
 let x=x1
 let y=y1
 let dx=lerpStp(x,x2,itr)
@@ -122,13 +106,12 @@ while(true){
 let a=x3
 let b=y3
 drawLine(x,y,a,b,col)
-drawfill(x,y,[255,255,255])
 x=x+dx
 y=y+dy
 i=i+1
-if(i==itr){
+if(i>=itr){
 break
-}}i=0
+}}i=1
 x=x2
 y=y2
 dx=lerpStp(x,x3,itr)
@@ -137,13 +120,12 @@ while(true){
 a=x1
 b=y1
 drawLine(x,y,a,b,col)
-drawfill(x,y,[255,255,255])
 x=x+dx
 y=y+dy
 i=i+1
-if(i==itr){
+if(i>=itr){
 break
-}}i=0
+}}i=1
 x=x3
 y=y3
 dx=lerpStp(x,x1,itr)
@@ -155,25 +137,29 @@ while(true){
 a=x2
 b=y2
 drawLine(x,y,a,b,col)
-drawfill(x,y,[255,255,255])
 x=x+dx
 y=y+dy
 i=i+1
-if(i==itr){
+if(i>=itr){
 break
 }}return 0
 }
+function ry(){
+return (Math.random()*800)
+}
+function rx(){
+return (Math.random()*1000)
+}
 
  const THISISTHEMAINFUNCTION = async () => {
-p1x=50
-p2x=10
-p3x=150
-p1y=10
-p2y=75
-p3y=100
 await clear()
-fillTriangle(p1x,p1y,p2x,p2y,p3x,p3y,[255,0,0])
-} 
+ts=10
+while(true){
+fillTriangle(rx(),ry(),rx(),ry(),rx(),ry(),[Math.random()*255,Math.random()*255,Math.random()*255],Math.random()*50+20)
+ts=ts-1
+if(ts==0){
+break
+}}} 
  THISISTHEMAINFUNCTION()</script>
 </body>
 </html>

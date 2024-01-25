@@ -67,7 +67,7 @@ function appr(v){
 return (4*v*(180-v))/(40500-v*(180-v))
 }
 function sin(X){
-x=X
+let x=X
 while(true){
 if(x>=0){
 break
@@ -79,35 +79,22 @@ return (-appr(x-180))
 }return (appr(x))
 }
 function cos(X){
-ret=sin(3.14/2-X)
+let ret=sin(3.14/2-X)
 return ret
 }
+function lerpStp(x,target,itr){
+return (target-x)/itr
+}
 function drawLine(x1,y1,x2,y2,col){
-x=x1
-y=y1
-if(x2==x1){
-if(y2<y1){
-y=y2
-y2=y1
-}while(true){
-drawfill(x,y,col)
-if(y>=y2){
+let dx=lerpStp(x1,x2,500)
+let dy=lerpStp(y1,y2,500)
+let i=0
+while(true){
+drawfill(x1+dx*i,y1+dy*i,col)
+i=i+1
+if(i>500){
 break
-}y=y+0.5
-}return 0
-}dx=0.1
-dy=((y2-y1)/(x2-x1))*dx
-if(x1>x2){
-x=x2
-x2=x1
-y=y2
-}while(true){
-drawfill(x,y,col)
-if(x>x2){
-break
-}x=x+dx
-y=y+dy
-}}
+}}}
 
  const THISISTHEMAINFUNCTION = async () => {
 x1=0
