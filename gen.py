@@ -20,6 +20,8 @@ class Generator:
         self.buffer += stri
 
     def buffer_to_body(self):
+        if self.buffer.strip() == "":
+            return
         if self.section == "CONFIG":
             buf = self.buffer
             try:
