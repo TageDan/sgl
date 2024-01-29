@@ -26,69 +26,96 @@
     SCREEN_GRIDSIZE = 1.0
     SCREEN_WIDTH = 800.0
     SCREEN_BG = [0, 0, 0]
-    SCREEN_CLEAR_DELAY = 0.01
+    SCREEN_CLEAR_DELAY = 0.05
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-    function draw(x, y){
+    function draw(x, y, col){
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
         DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.rect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
-    }
-
-    function drawfill(x, y, col){
-        DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
-        DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
     }
 
     async function clear(){
         await sleep(SCREEN_CLEAR_DELAY*1000)
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
     }
-
-    function show(col){
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.closePath()
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fill();
-        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
-    }
-
-    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.beginPath()
+function appr(v){
+return (4*v*(180-v))/(40500-v*(180-v))
+}
 function sin(X){
-x=X
+let x=X
 while(true){
 if(x>=0){
 break
 }x=6.28+x
 }x=x%6.28
-return (-(x-3.14))+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+x=x*360/6.28
+if(x>=180){
+return (-appr(x-180))
+}return (appr(x))
 }
+function cos(X){
+let ret=sin(3.14/2-X)
+return ret
+}
+function lerpStp(x,target,itr){
+return (target-x)/itr
+}
+function drawLine(x1,y1,x2,y2,col){
+let dx=lerpStp(x1,x2,500)
+let dy=lerpStp(y1,y2,500)
+let i=0
+while(true){
+drawfill(x1+dx*i,y1+dy*i,col)
+i=i+1
+if(i>500){
+break
+}}}
 
  const THISISTHEMAINFUNCTION = async () => {
-t=0
+x1=0
+y1=0
+x2=0
+y2=SCREEN_HEIGHT/2
+x3=0
+y3=SCREEN_HEIGHT
+x4=SCREEN_WIDTH/2
+y4=0
+x5=SCREEN_WIDTH/2
+y5=SCREEN_HEIGHT
+x6=SCREEN_WIDTH
+y6=0
+x7=SCREEN_WIDTH
+y7=SCREEN_HEIGHT/2
+x8=SCREEN_WIDTH
+y8=SCREEN_HEIGHT
+v=0
 while(true){
 await clear()
-i=0
-while(true){
-y1=sin(2*t)*3.5*sin(i+t*5)
-y2=(2-sin(t+0.2))*6*sin(i/3+t*3)
-drawfill(i,SCREEN_HEIGHT/4+y1,[0,0,255])
-drawfill(i,SCREEN_HEIGHT*2/4+y2,[0,255,0])
-drawfill(i,SCREEN_HEIGHT*3/4+y1+y2,[255,0,0])
-if(i==SCREEN_WIDTH){
-break
-}i=i+1
-}t=t+0.1
-t=t%6.28
+squareW=1
+squareWX=squareW/100*SCREEN_WIDTH
+squareWY=squareW/100*SCREEN_HEIGHT
+X=SCREEN_WIDTH/2+cos(v)*SCREEN_WIDTH/4
+Y=SCREEN_HEIGHT/2+sin(v)*SCREEN_HEIGHT/4
+drawLine(x1,y1,X-squareWX,Y-squareWY,[0,0,255])
+drawLine(x2,y2,X-squareWX,Y,[50,100,155])
+drawLine(x3,y3,X-squareWX,Y+squareWY,[50,155,100])
+drawLine(x4,y4,X,Y-squareWY,[100,50,155])
+drawLine(x5,y5,X,Y+squareWY,[0,255,0])
+drawLine(x6,y6,X+squareWX,Y-squareWY,[155,50,100])
+drawLine(x7,y7,X+squareWX,Y,[255,0,0])
+drawLine(x8,y8,X+squareWX,Y+squareWY,[125,125,50])
+drawLine(X-squareWX,Y-squareWY,X+squareWX,Y-squareWY,[255,255,255])
+drawLine(X+squareWX,Y-squareWY,X+squareWX,Y+squareWY,[255,255,255])
+drawLine(X+squareWX,Y+squareWY,X-squareWX,Y+squareWY,[255,255,255])
+drawLine(X-squareWX,Y+squareWY,X-squareWX,Y-squareWY,[255,255,255])
+v=v+0.02
+v=v%6.28
 }} 
  THISISTHEMAINFUNCTION()</script>
 </body>

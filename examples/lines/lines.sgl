@@ -43,7 +43,7 @@ drawLine(x1 y1 x2 y2 col) = {
     i = 0
     loop {
 
-        drawfill(x1+dx*i y1+dy*i col)
+        draw(x1+dx*i y1+dy*i col)
 
         i = i+1
         if i > 500{

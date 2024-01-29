@@ -35,7 +35,7 @@ i = 100000
 clear()
 loop {
     
-    draw(x SCREEN_HEIGHT-y)
+    draw(x SCREEN_HEIGHT-y [255 255 255])
     p = random()*3
     x = lerpX(x p)
     y = lerpY(y p)
@@ -45,4 +45,3 @@ loop {
         break
     }
 }
-show([255 255 255])

@@ -31,7 +31,7 @@ loop{
 r = SCREEN_WIDTH/2 - i
 v = 0
 loop{
-    drawfill(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 255 255])
+    draw(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 255 255])
     if v > 6.28{
         break
     }

@@ -1,0 +1,64 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        }
+
+        /* Add additional styles for your content here */
+    </style>
+</head>
+<body >
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "750" height = "150"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 150.0
+    SCREEN_GRIDSIZE = 1.0
+    SCREEN_WIDTH = 750.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.0
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+    function draw(x, y, col){
+        DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
+        DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    async function clear(){
+        await sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+function sin(X){
+let x=X%6.28
+return (-(x-3.14))+((x-3.14)**3/6)-((x-3.14)**5/124)+((x-3.14)**7/5040)-((x-3.14)**9/362880)
+}
+
+ const THISISTHEMAINFUNCTION = async () => {
+i=0
+await clear()
+while(true){
+y=sin(i/20)
+draw(i,SCREEN_HEIGHT/2+(SCREEN_HEIGHT-40)/2*y,[255,0,255])
+if(i==SCREEN_WIDTH){
+break
+}i=i+1
+}} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>

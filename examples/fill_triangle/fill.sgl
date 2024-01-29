@@ -1,8 +1,8 @@
 #CONFIG#
-SCREEN_HEIGHT = 800
-SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 300
+SCREEN_WIDTH = 300
 SCREEN_BG = [0 0 0]
-SCREEN_GRIDSIZE = 1
+SCREEN_GRIDSIZE = 3
 SCREEN_CLEAR_DELAY = 0.05
 
 #FUNCTIONS#
@@ -42,7 +42,7 @@ drawLine(x1 y1 x2 y2 col) = {
     i = 0
     loop {
 
-        drawfill(x1+dx*i y1+dy*i col)
+        draw(x1+dx*i y1+dy*i col)
 
         i = i+1
         if i > 500{
@@ -108,11 +108,11 @@ fillTriangle(x1 y1 x2 y2 x3 y3 col sa) = {
 }
 
 ry() = {
-    (random()*800)
+    (random()*SCREEN_HEIGHT)
 }
 
 rx() = {
-    (random()*1000)
+    (random()*SCREEN_WIDTH)
 }
 
 
@@ -125,7 +125,7 @@ clear()
 ts = 10
 
 loop{
-    fillTriangle(rx() ry() rx() ry() rx() ry() [random()*255 random()*255 random()*255] random()*50+20)
+    fillTriangle(rx() ry() rx() ry() rx() ry() [random()*255 random()*255 random()*255] random()*30+5)
 
     ts = ts-1
     if ts == 0 {
