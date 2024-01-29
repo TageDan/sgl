@@ -202,7 +202,7 @@ print(floor(x/y))
 
 ## What's Coming
 * A Online compiler
-* Actually usefull lists
+* Actually useful lists
 * A sleep method (delay without clear)
 * Module functionality
 * Standard library
