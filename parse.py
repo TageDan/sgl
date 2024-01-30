@@ -151,6 +151,8 @@ class Parser:
             self.BREAK()
         elif self.curToken.type == tokenType.PRINT:
             self.print()
+        elif self.curToken.type == tokenType.SLEEP:
+            self.sleep()
         else:
             self.abort(f"Unexcpected statement ('{self.curToken.literal}')")
 
@@ -381,11 +383,32 @@ class Parser:
             if i != 2:
                 self.generator.write_to_buffer(",")
         if self.curToken.type != tokenType.RIGHT_PAREN:
-            self.abort("Expected right paren for draw statement, (draw takes exactly 2 params)")
+            self.abort("Expected right paren for draw statement, (draw takes exactly 3 params)")
         self.writeCurToBuf()
         self.nextToken()
         if self.curToken.type != tokenType.NEWLINE:
             self.abort("Expected newline after draw")
+        self.writeCurToBuf()
+        self.NL()
+
+    def sleep(self):
+        self.generator.write_to_buffer("await ")
+        self.writeCurToBuf()
+        self.nextToken()
+        if self.curToken.type != tokenType.LEFT_PAREN:
+            self.abort("Expected left paren for sleep statement")
+        self.writeCurToBuf()
+        self.nextToken()
+        for i in range(1):
+            self.expression()
+            if i != 2:
+                self.generator.write_to_buffer(",")
+        if self.curToken.type != tokenType.RIGHT_PAREN:
+            self.abort("Expected right paren for sleep statement, (draw takes exactly 1 params)")
+        self.writeCurToBuf()
+        self.nextToken()
+        if self.curToken.type != tokenType.NEWLINE:
+            self.abort("Expected newline after sleep")
         self.writeCurToBuf()
         self.NL()
 
