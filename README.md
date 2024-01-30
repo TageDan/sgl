@@ -324,7 +324,7 @@ This will shrink the square from large to small. Then all we need to do is to sc
 scale = 1
 loop{
 loop {
-    if scale >= 0.5 {
+    if scale <= 0.5 {
         break
     }
     clear()
@@ -334,14 +334,14 @@ loop {
     scale = scale - 0.025
 }
 loop {
-    if scale == 1 {
+    if scale >= 1 {
         break
     }
     clear()
     width = (SCREEN_WIDTH - 20)*scale
     height = (SCREEN_HEIGHT - 20)*scale
     drawSquare(SCREEN_WIDTH/2-width/2 SCREEN_HEIGHT/2-height/2 width height)
-    scale = scale + 0.1
+    scale = scale + 0.025
 }
 }
 ```
