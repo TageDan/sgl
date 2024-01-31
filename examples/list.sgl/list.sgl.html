@@ -1,0 +1,84 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        }
+
+        /* Add additional styles for your content here */
+    </style>
+</head>
+<body >
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "250" height = "250"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 50.0
+    SCREEN_GRIDSIZE = 5.0
+    SCREEN_WIDTH = 50.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.1
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+    function draw(x, y, col){
+        DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
+        DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    async function clear(){
+        await sleep(SCREEN_CLEAR_DELAY*1000)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+
+    function clone(l) {
+        return JSON.parse(JSON.stringify(l));
+    }
+
+    function length(l) {
+        if ("object" == typeof l) {
+            return l.length
+        }
+        else {
+            return null
+        }
+    }
+
+ const THISISTHEMAINFUNCTION = async () => {
+ await clear() 
+dirs=[[1,0],[0,1],[(-1),0],[0,((-1))]]
+body=[[SCREEN_WIDTH/2,SCREEN_HEIGHT/2],[SCREEN_WIDTH/2,SCREEN_HEIGHT/2],[SCREEN_WIDTH/2,SCREEN_HEIGHT/2],[SCREEN_WIDTH/2,SCREEN_HEIGHT/2]]
+while(true){
+await clear()
+d=Math.floor(Math.random()*4)
+dir=dirs[d]
+pos=clone(body[0])
+pos[0]=pos[0]+dir[0]
+pos[1]=pos[1]+dir[1]
+body[3]=clone(body[2])
+body[2]=clone(body[1])
+body[1]=clone(body[0])
+body[0]=clone(pos)
+draw(body[0][0],body[0][1],([255,255,255]))
+draw(body[1][0],body[1][1],([255,0,0]))
+draw(body[2][0],body[2][1],([0,255,0]))
+draw(body[3][0],body[3][1],([0,0,255]))
+console.log(length(body))
+}} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>

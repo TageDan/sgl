@@ -24,6 +24,7 @@ class tokenType(enum.Enum):
     LEFT_SQUARE = 16
     RIGHT_SQUARE = 17
     EXP = 19
+    COMMA = 20
 
     #Types
     NUMBER = 100
@@ -42,6 +43,7 @@ class tokenType(enum.Enum):
     PUSH = 207
     PRINT = 208
     SLEEP = 209
+    
 
 class Token:
     def __init__(self, type: tokenType, literal):
@@ -88,6 +90,8 @@ class Lexer:
             
         elif self.curChar == "/":
             token = Token(tokenType.DIVIDE, "/")
+        elif self.curChar == ",":
+            token = Token(tokenType.COMMA, ",")
         elif self.curChar == "%":
             token = Token(tokenType.MOD, "%")
         elif self.curChar == "(":

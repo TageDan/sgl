@@ -81,6 +81,19 @@ class Generator:
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
     {'}'}
+
+    function clone(l) {'{'}
+        return JSON.parse(JSON.stringify(l));
+    {'}'}
+
+    function length(l) {'{'}
+        if ("object" == typeof l) {'{'}
+            return l.length
+        {'}'}
+        else {'{'}
+            return null
+        {'}'}
+    {'}'}
 """
 
         with open(self.path, "w+") as f:

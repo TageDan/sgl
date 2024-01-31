@@ -30,6 +30,7 @@ class Parser:
         while self.curToken.type == tokenType.NEWLINE:
             self.nextToken()
             self.line += 1
+            print(self.line)
 
     def program(self):
         self.nextToken()
@@ -126,7 +127,7 @@ class Parser:
         if self.curToken.type == tokenType.DRAW:
             self.draw()
         elif self.curToken.type == tokenType.NAME:
-            if self.peek().type == tokenType.EQ:
+            if self.peek().type in [tokenType.EQ, tokenType.LEFT_SQUARE]:
                 self.declaration()
             elif self.peek().type == tokenType.LEFT_PAREN:
                 self.functionCall()
@@ -134,6 +135,7 @@ class Parser:
                 if self.curToken.type != tokenType.NEWLINE:
                     self.abort("Expected newline after isolated function-call")
                 self.writeCurToBuf()
+                
 
             elif self.section == "FUNCTIONS":
                 self.functionReturn()
@@ -182,6 +184,16 @@ class Parser:
                 self.generator.write_to_buffer("let ")
         self.writeCurToBuf()
         self.nextToken()
+        while self.curToken.type == tokenType.LEFT_SQUARE:
+            self.writeCurToBuf()
+            self.nextToken()
+            self.expression()
+            if self.curToken.type != tokenType.RIGHT_SQUARE:
+                self.abort("Expected index to close")
+            self.writeCurToBuf()
+            self.nextToken()
+        if self.curToken.type != tokenType.EQ:
+            self.abort("Expected '=' sign in declaration")
         "="
         self.writeCurToBuf()
         self.nextToken()
@@ -211,12 +223,22 @@ class Parser:
             neg = True
             self.generator.write_to_buffer("(-")
             self.nextToken()
+        
         if self.curToken.type == tokenType.NAME:
             if self.peek().type == tokenType.LEFT_PAREN:
                 self.functionCall()
             else:
                 self.writeCurToBuf()
+                while self.peek().type == tokenType.LEFT_SQUARE:
+                    self.nextToken()
+                    self.writeCurToBuf()
+                    self.nextToken()
+                    self.expression()
+                    if self.curToken.type != tokenType.RIGHT_SQUARE:
+                        self.abort("Expected index to close")
+                    self.writeCurToBuf()
             self.nextToken()
+
         elif self.curToken.type == tokenType.NUMBER:
             self.writeCurToBuf()
             self.nextToken()
