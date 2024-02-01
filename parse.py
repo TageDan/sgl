@@ -363,6 +363,10 @@ class Parser:
             self.abort("Expected name as first parameter to push statement")
         self.writeCurToBuf()
         self.generator.write_to_buffer(".push(")
+        self.nextToken()
+        if self.curToken.type != tokenType.COMMA:
+            self.abort("Expected comma between arguments in push statement")
+        self.nextToken()
         self.expression()
         if self.curToken.type != tokenType.RIGHT_PAREN:
             self.abort("Expected right paren for push statement, (push takes exactly 2 params)")
