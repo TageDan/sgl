@@ -20,7 +20,7 @@ class Parser:
         except IndexError:
             self.generator.buffer_to_body()
             self.generator.write_to_file()
-            sys.exit("file parsed")
+            sys.exit(0)
 
 
     def peek(self):
@@ -30,7 +30,6 @@ class Parser:
         while self.curToken.type == tokenType.NEWLINE:
             self.nextToken()
             self.line += 1
-            print(self.line)
 
     def program(self):
         self.nextToken()
