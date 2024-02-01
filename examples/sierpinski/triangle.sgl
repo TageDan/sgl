@@ -1,20 +1,20 @@
 #CONFIG#
 SCREEN_HEIGHT = 900
 SCREEN_WIDTH = 900
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0
 SCREEN_GRIDSIZE = 1
 
 #FUNCTIONS#
 
-lerpY(y p) = {
+lerpY(y, p) = {
     print(p)
     if p < 1 {
         y/2 + SCREEN_HEIGHT/2
     }
     y/2
 }
-lerpX(x p) = {
+lerpX(x, p) = {
     if p < 1 {
         x/2 + SCREEN_WIDTH/4
     }
@@ -35,10 +35,10 @@ i = 100000
 clear()
 loop {
     
-    draw(x SCREEN_HEIGHT-y [255 255 255])
+    draw(x, SCREEN_HEIGHT-y, [255, 255, 255])
     p = random()*3
-    x = lerpX(x p)
-    y = lerpY(y p)
+    x = lerpX(x, p)
+    y = lerpY(y, p)
 
     i = i-1
     if i == 0 {

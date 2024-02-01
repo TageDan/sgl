@@ -67,7 +67,7 @@ class Generator:
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
-    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay*1000))
 
     function draw(x, y, col){'{'}
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
@@ -77,7 +77,7 @@ class Generator:
     {'}'}
 
     async function clear(){'{'}
-        await sleep(SCREEN_CLEAR_DELAY*1000)
+        await sleep(SCREEN_CLEAR_DELAY)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
     {'}'}

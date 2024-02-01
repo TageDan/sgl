@@ -1,7 +1,7 @@
 #CONFIG#
 SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 300
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0.0333
 SCREEN_GRIDSIZE = 1
 
@@ -44,10 +44,10 @@ loop{
         v = 0
         loop{
             if v < mv{
-                drawfill(SCREEN_WIDTH/2+r*cos(v)/1.2 SCREEN_HEIGHT/2+r*sin(v)/1.2 [0 255 0])
+                drawfill(SCREEN_WIDTH/2+r*cos(v)/1.2 SCREEN_HEIGHT/2+r*sin(v)/1.2 [0, 255, 0])
             }
             if v < mv2{
-                drawfill(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255 0 0])
+                drawfill(SCREEN_WIDTH/2+r*cos(v) SCREEN_HEIGHT/2+r*sin(v) [255, 0, 0])
             }
             if v > mv{
                 if v > mv2{

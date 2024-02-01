@@ -25,7 +25,7 @@ This code generates an html canvas with width and height 200*8 px, black backgro
 #CONFIG#
 SCREEN_HEIGHT = 200
 SCREEN_WIDTH = 200
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0.5
 SCREEN_GRIDSIZE = 8
 ```
@@ -36,7 +36,7 @@ Standard values are:
 ```
 SCREEN_HEIGHT = 100
 SCREEN_WIDTH = 100
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0
 SCREEN_GRIDSIZE = 5
 ```
@@ -145,7 +145,7 @@ Three parameters (x y color)
 
 Usage:
 ```
-draw(10 10 [255 255 255])
+draw(10, 10, [255, 255, 255])
 ```
 This fills the grid at position x = 10, y = 10 with the color white
 
@@ -158,7 +158,7 @@ clear()
 
 i = 0
 loop {
-    draw(i i [0 255 0])
+    draw(i, i, [0, 255, 0])
     clear()
     i = i + 1
     if i == 50 {
@@ -218,7 +218,7 @@ Then in square.sgl write this config section:
 #CONFIG#
 SCREEN_WIDTH = 200
 SCREEN_HEIGHT = 200
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0.1
 SCREEN_GRIDSIZE = 1
 ```
@@ -254,7 +254,7 @@ This works because we, starting from the upper left corner (x0 y0), draw the poi
 We'll do a similar appraoch for the remaining sides like this:
 ```
 #FUNCTIONS#
-drawSquare(x0 y0 w h) = {
+drawSquare(x0, y0, w, h) = {
     x = x0
     y = y0
     x1 = x0+w
@@ -263,28 +263,28 @@ drawSquare(x0 y0 w h) = {
         if x >= x1 {
             break
         }
-        draw(x y [255 255 255])
+        draw(x, y, [255, 255, 255])
         x = x+ 0.5
     }
     loop {
         if y >= y1 {
             break
         }
-        draw(x y [255 255 255])
+        draw(x, y, [255, 255, 255])
         y = y+ 0.5
     }
     loop {
-        if x <= x0 {
+        if x <= x0 {   
             break
         }
-        draw(x y [255 255 255])
+        draw(x, y, [255, 255,255])
         x = x- 0.5
     }
     loop {
         if y <= y0 {
             break
         }
-        draw(x y [255 255 255])
+        draw(x, y, [255, 255, 255])
         y = y-0.5
     }
 }
@@ -297,7 +297,7 @@ Now we'll start the main section by drawing a square using the function.
 ```
 #MAIN#
 
-drawSquare(10 10 SCREEN_WIDTH -20 SCREEN_HEIGHT-20)
+drawSquare(10, 10, SCREEN_WIDTH -20, SCREEN_HEIGHT-20)
 ```
 
 Viola! You have now made a square on a canvas.
@@ -312,7 +312,7 @@ loop {
     clear()
     width = (SCREEN_WIDTH - 20)*scale
     height = (SCREEN_HEIGHT - 20)*scale
-    drawSquare(SCREEN_WIDTH/2-width/2 SCREEN_HEIGHT/2-height/2 width height)
+    drawSquare(SCREEN_WIDTH/2-width/2, SCREEN_HEIGHT/2-height/2, width, height)
     scale = scale - 0.025
 }
 ```
@@ -330,7 +330,7 @@ loop {
     clear()
     width = (SCREEN_WIDTH - 20)*scale
     height = (SCREEN_HEIGHT - 20)*scale
-    drawSquare(SCREEN_WIDTH/2-width/2 SCREEN_HEIGHT/2-height/2 width height)
+    drawSquare(SCREEN_WIDTH/2-width/2, SCREEN_HEIGHT/2-height/2, width, height)
     scale = scale - 0.025
 }
 loop {
@@ -340,7 +340,7 @@ loop {
     clear()
     width = (SCREEN_WIDTH - 20)*scale
     height = (SCREEN_HEIGHT - 20)*scale
-    drawSquare(SCREEN_WIDTH/2-width/2 SCREEN_HEIGHT/2-height/2 width height)
+    drawSquare(SCREEN_WIDTH/2-width/2, SCREEN_HEIGHT/2-height/2 ,width, height)
     scale = scale + 0.025
 }
 }

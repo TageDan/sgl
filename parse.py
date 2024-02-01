@@ -93,15 +93,18 @@ class Parser:
         if self.curToken.type != tokenType.LEFT_PAREN:
             self.abort("Excpected left-paren in function declaration, got " + self.curToken.type.name)
         self.writeCurToBuf()
-        while self.peek().type != tokenType.RIGHT_PAREN:
-            self.nextToken()
+        self.nextToken()
+        while self.curToken.type != tokenType.RIGHT_PAREN:
             if self.curToken.type != tokenType.NAME:
                 self.abort("Expected name token for function parameter")
             self.declared.append(self.curToken.literal)
             self.writeCurToBuf()
-            if self.peek().type != tokenType.RIGHT_PAREN:
-                self.generator.write_to_buffer(",")
-        self.nextToken()
+            self.nextToken()
+            if self.curToken.type != tokenType.RIGHT_PAREN:
+                if self.curToken.type != tokenType.COMMA:
+                    self.abort("Expected comma between arguments in function declaration")
+                self.writeCurToBuf()
+                self.nextToken()
         self.writeCurToBuf()
         self.nextToken()
         if self.curToken.type != tokenType.EQ:
@@ -173,7 +176,11 @@ class Parser:
         while self.curToken.type != tokenType.RIGHT_PAREN:
             self.expression()
             if self.curToken.type != tokenType.RIGHT_PAREN:
-                self.generator.write_to_buffer(",")
+                if self.curToken.type != tokenType.COMMA:
+                    self.abort("Expected comma between function arguments")
+                self.writeCurToBuf()
+                self.nextToken()
+                
         self.writeCurToBuf()
 
     def declaration(self):
@@ -262,7 +269,10 @@ class Parser:
         while self.curToken.type != tokenType.RIGHT_SQUARE:
             self.expression()
             if self.curToken.type != tokenType.RIGHT_SQUARE:
-                self.generator.write_to_buffer(",")
+                if self.curToken.type != tokenType.COMMA:
+                    self.abort("Expected comma between items in list")
+                self.writeCurToBuf()
+                self.nextToken()
         self.writeCurToBuf()
         self.nextToken()
         
@@ -352,11 +362,11 @@ class Parser:
         if self.curToken.type != tokenType.NAME:
             self.abort("Expected name as first parameter to push statement")
         self.writeCurToBuf()
-        self.generator.write_to_buffer("[")
+        self.generator.write_to_buffer(".push(")
         self.expression()
         if self.curToken.type != tokenType.RIGHT_PAREN:
             self.abort("Expected right paren for push statement, (push takes exactly 2 params)")
-        self.generator.write_to_buffer("]")
+        self.generator.write_to_buffer(")")
         self.nextToken()
         if self.curToken.type != tokenType.NEWLINE:
             self.abort("Expected newline after push")
@@ -403,7 +413,10 @@ class Parser:
         for i in range(3):
             self.expression()
             if i != 2:
-                self.generator.write_to_buffer(",")
+                if self.curToken.type != tokenType.COMMA:
+                    self.abort("Expected comma between arguments in draw")
+                self.writeCurToBuf()
+                self.nextToken()
         if self.curToken.type != tokenType.RIGHT_PAREN:
             self.abort("Expected right paren for draw statement, (draw takes exactly 3 params)")
         self.writeCurToBuf()
@@ -421,10 +434,7 @@ class Parser:
             self.abort("Expected left paren for sleep statement")
         self.writeCurToBuf()
         self.nextToken()
-        for i in range(1):
-            self.expression()
-            if i != 2:
-                self.generator.write_to_buffer(",")
+        self.expression()
         if self.curToken.type != tokenType.RIGHT_PAREN:
             self.abort("Expected right paren for sleep statement, (draw takes exactly 1 params)")
         self.writeCurToBuf()

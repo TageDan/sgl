@@ -19,18 +19,18 @@
     </style>
 </head>
 <body >
-    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "250" height = "250"></canvas>
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "900" height = "900"></canvas>
 
     <script>
-    SCREEN_HEIGHT = 50.0
-    SCREEN_GRIDSIZE = 5.0
-    SCREEN_WIDTH = 50.0
+    SCREEN_HEIGHT = 300.0
+    SCREEN_GRIDSIZE = 3.0
+    SCREEN_WIDTH = 300.0
     SCREEN_BG = [0, 0, 0]
-    SCREEN_CLEAR_DELAY = 0.1
+    SCREEN_CLEAR_DELAY = 0.05
 
     CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
 
-    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay*1000))
 
     function draw(x, y, col){
         DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
@@ -40,7 +40,7 @@
     }
 
     async function clear(){
-        await sleep(SCREEN_CLEAR_DELAY*1000)
+        await sleep(SCREEN_CLEAR_DELAY)
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
         CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
     }
@@ -57,27 +57,55 @@
             return null
         }
     }
+function min(a,b){
+if(a>b){
+return b
+}return a
+}
+function max(a,b){
+if(a<b){
+return b
+}return a
+}
+function appr(v){
+return (4*v*(180-v))/(40500-v*(180-v))
+}
+function sin(X){
+let x=X
+while(true){
+if(x>=0){
+break
+}x=6.28+x
+}x=x%6.28
+x=x*360/6.28
+if(x>=180){
+return (-appr(x-180))
+}return (appr(x))
+}
+function cos(X){
+let ret=sin(3.14/2-X)
+return ret
+}
+function rainbow(i){
+return [min(max(0,255*(0.5+sin(2*3.14*i+3.14/2))),255),min(max(0,255*(0.5+sin(2*3.14*i-3.14/6))),255),min(max(0,255*(0.5+sin(2*3.14*i-5*3.14/6))),255)]
+}
 
  const THISISTHEMAINFUNCTION = async () => {
  await clear() 
-dirs=[[1,0],[0,1],[(-1),0],[0,(-1)]]
-body=[[SCREEN_WIDTH/2,SCREEN_HEIGHT/2],[SCREEN_WIDTH/2,SCREEN_HEIGHT/2],[SCREEN_WIDTH/2,SCREEN_HEIGHT/2],[SCREEN_WIDTH/2,SCREEN_HEIGHT/2]]
-while(true){
+px=SCREEN_WIDTH/2
+py=SCREEN_HEIGHT/2
+i=0
+v=Math.random()*6.28
 await clear()
-d=Math.floor(Math.random()*4)
-dir=dirs[d]
-pos=clone(body[0])
-pos[0]=pos[0]+dir[0]
-pos[1]=pos[1]+dir[1]
-body[3]=clone(body[2])
-body[2]=clone(body[1])
-body[1]=clone(body[0])
-body[0]=clone(pos)
-draw(body[0][0],body[0][1],([255,255,255]))
-draw(body[1][0],body[1][1],([255,0,0]))
-draw(body[2][0],body[2][1],([0,255,0]))
-draw(body[3][0],body[3][1],([0,0,255]))
-console.log(length(body))
+while(true){
+draw(px,py,rainbow(i))
+i=i+0.0001
+v=v+Math.random()*3.14/2-3.14/4
+await sleep(0.002)
+px=px+cos(v)
+py=py+sin(v)
+px=(px+SCREEN_WIDTH)%SCREEN_WIDTH
+py=(py+SCREEN_HEIGHT)%SCREEN_HEIGHT
 }} 
  THISISTHEMAINFUNCTION()</script>
 </body>

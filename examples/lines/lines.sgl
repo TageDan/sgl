@@ -1,7 +1,7 @@
 #CONFIG#
 SCREEN_HEIGHT = 500
 SCREEN_WIDTH = 800
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_GRIDSIZE = 1
 SCREEN_CLEAR_DELAY = 0.05
 
@@ -32,18 +32,18 @@ cos(X) = {
     ret
 }
 
-lerpStp(x target itr) = {
+lerpStp(x, target, itr) = {
     (target - x)/itr
 }
 
 
-drawLine(x1 y1 x2 y2 col) = {
-    dx = lerpStp(x1 x2 500)
-    dy = lerpStp(y1 y2 500)
+drawLine(x1, y1, x2, y2, col) = {
+    dx = lerpStp(x1, x2, 500)
+    dy = lerpStp(y1, y2, 500)
     i = 0
     loop {
 
-        draw(x1+dx*i y1+dy*i col)
+        draw(x1+dx*i, y1+dy*i, col)
 
         i = i+1
         if i > 500{
@@ -81,18 +81,18 @@ loop {
     squareWY = squareW/100*SCREEN_HEIGHT
     X = SCREEN_WIDTH/2 + cos(v)*SCREEN_WIDTH/4
     Y = SCREEN_HEIGHT/2 + sin(v)*SCREEN_HEIGHT/4
-    drawLine(x1 y1 X-squareWX Y-squareWY [0 0 255])
-    drawLine(x2 y2 X-squareWX Y [50 100 155])
-    drawLine(x3 y3 X-squareWX Y+squareWY [50 155 100])
-    drawLine(x4 y4 X Y-squareWY [100 50 155])
-    drawLine(x5 y5 X Y+squareWY [0 255 0])
-    drawLine(x6 y6 X+squareWX Y-squareWY [155 50 100])
-    drawLine(x7 y7 X+squareWX Y [255 0 0])
-    drawLine(x8 y8 X+squareWX Y+squareWY [125 125 50])
-    drawLine(X-squareWX Y-squareWY X+squareWX Y-squareWY [255 255 255])
-    drawLine(X+squareWX Y-squareWY X+squareWX Y+squareWY [255 255 255])
-    drawLine(X+squareWX Y+squareWY X-squareWX Y+squareWY [255 255 255])
-    drawLine(X-squareWX Y+squareWY X-squareWX Y-squareWY [255 255 255])
+    drawLine(x1, y1, X-squareWX, Y-squareWY, [0, 0, 255])
+    drawLine(x2, y2, X-squareWX, Y, [50, 100, 155])
+    drawLine(x3, y3, X-squareWX, Y+squareWY, [50, 155, 100])
+    drawLine(x4, y4, X, Y-squareWY, [100, 50, 155])
+    drawLine(x5, y5, X, Y+squareWY, [0, 255, 0])
+    drawLine(x6, y6, X+squareWX, Y-squareWY, [155, 50, 100])
+    drawLine(x7, y7, X+squareWX, Y, [255, 0, 0])
+    drawLine(x8, y8, X+squareWX, Y+squareWY, [125, 125, 50])
+    drawLine(X-squareWX, Y-squareWY, X+squareWX, Y-squareWY, [255, 255, 255])
+    drawLine(X+squareWX, Y-squareWY, X+squareWX, Y+squareWY, [255, 255, 255])
+    drawLine(X+squareWX, Y+squareWY, X-squareWX, Y+squareWY, [255, 255, 255])
+    drawLine(X-squareWX, Y+squareWY, X-squareWX, Y-squareWY, [255, 255, 255])
 
     v = v+0.02
     v = v%6.28

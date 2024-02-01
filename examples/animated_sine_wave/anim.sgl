@@ -2,7 +2,7 @@
 SCREEN_HEIGHT = 500
 SCREEN_WIDTH = 800
 SCREEN_GRIDSIZE = 1
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0.01
 
 #FUNCTIONS#
@@ -28,9 +28,9 @@ loop {
         y1 = sin(2*t)*3.5*sin(i+t*5)
         y2 = (2-sin(t+0.2))*6*sin(i/3+t*3)
 
-        draw(i SCREEN_HEIGHT/4+y1 [0 0 255])
-        draw(i SCREEN_HEIGHT*2/4+y2 [0 255 0])
-        draw(i SCREEN_HEIGHT*3/4+y1+y2 [255 0 0])
+        draw(i SCREEN_HEIGHT/4+y1 [0, 0, 255])
+        draw(i SCREEN_HEIGHT*2/4+y2 [0, 255, 0])
+        draw(i SCREEN_HEIGHT*3/4+y1+y2 [255, 0, 0])
 
         if i == SCREEN_WIDTH {
             break

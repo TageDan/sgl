@@ -1,15 +1,15 @@
 #CONFIG#
 SCREEN_WIDTH = 50
 SCREEN_HEIGHT = 50
-SCREEN_BG = [0 0 0]
+SCREEN_BG = [0, 0, 0]
 SCREEN_CLEAR_DELAY = 0.1
 SCREEN_GRIDSIZE = 5
 
 #MAIN#
 
-dirs = [[1 0] [0 1] [-1 0] [0 (-1)]]
+dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]]
 
-body = [[SCREEN_WIDTH/2 SCREEN_HEIGHT/2] [SCREEN_WIDTH/2 SCREEN_HEIGHT/2] [SCREEN_WIDTH/2 SCREEN_HEIGHT/2] [SCREEN_WIDTH/2 SCREEN_HEIGHT/2]]
+body = [[SCREEN_WIDTH/2, SCREEN_HEIGHT/2], [SCREEN_WIDTH/2, SCREEN_HEIGHT/2], [SCREEN_WIDTH/2, SCREEN_HEIGHT/2], [SCREEN_WIDTH/2, SCREEN_HEIGHT/2]]
 
 loop {
     clear()
@@ -22,9 +22,9 @@ loop {
     body[2] = clone(body[1])
     body[1] = clone(body[0])
     body[0] = clone(pos)
-    draw(body[0][0] body[0][1] ([255 255 255]))
-    draw(body[1][0] body[1][1] ([255 0 0]))
-    draw(body[2][0] body[2][1] ([0 255 0]))
-    draw(body[3][0] body[3][1] ([0 0 255]))
+    draw(body[0][0] body[0][1] ([255, 255, 255]))
+    draw(body[1][0] body[1][1] ([255, 0, 0]))
+    draw(body[2][0] body[2][1] ([0, 255, 0]))
+    draw(body[3][0] body[3][1] ([0, 0, 255]))
     print(length(body))
 }
