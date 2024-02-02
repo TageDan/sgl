@@ -83,19 +83,26 @@ function cos(X){
 let ret=sin(3.14/2-X)
 return ret
 }
-function lerpStp(x,target,itr){
-return (target-x)/itr
+function tan(X){
+return (sin(X)/cos(X))
 }
-function drawLine(x1,y1,x2,y2,col){
-let dx=lerpStp(x1,x2,500)
-let dy=lerpStp(y1,y2,500)
+function drawLine(p1,p2,col,steps){
+let x1=p1[0]
+let x2=p2[0]
+let y1=p1[1]
+let y2=p2[1]
+let dx=(x2-x1)/steps
+let dy=(y2-y1)/steps
 let i=0
 while(true){
 draw(x1+dx*i,y1+dy*i,col)
 i=i+1
-if(i>500){
+if(i>steps){
 break
 }}}
+function lerpStp(x,target,itr){
+return (target-x)/itr
+}
 function fillTriangle(x1,y1,x2,y2,x3,y3,col,sa){
 let itr=sa
 let i=1
@@ -106,7 +113,7 @@ let dy=lerpStp(y,y2,itr)
 while(true){
 let a=x3
 let b=y3
-drawLine(x,y,a,b,col)
+drawLine([x,y],[a,b],col,500)
 x=x+dx
 y=y+dy
 i=i+1
@@ -120,7 +127,7 @@ dy=lerpStp(y,y3,itr)
 while(true){
 a=x1
 b=y1
-drawLine(x,y,a,b,col)
+drawLine([x,y],[a,b],col,500)
 x=x+dx
 y=y+dy
 i=i+1
@@ -137,7 +144,7 @@ dy=lerpStp(y,y1,itr)
 while(true){
 a=x2
 b=y2
-drawLine(x,y,a,b,col)
+drawLine([x,y],[a,b],col,500)
 x=x+dx
 y=y+dy
 i=i+1

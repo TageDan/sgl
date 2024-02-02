@@ -1,20 +1,7 @@
+import("std/draw")
+
 lerpStp(x, target, itr) = {
     (target - x)/itr
-}
-
-drawLine(x1, y1, x2, y2, col) = {
-    dx = lerpStp(x1, x2, 500)
-    dy = lerpStp(y1, y2, 500)
-    i = 0
-    loop {
-
-        draw(x1+dx*i, y1+dy*i, col)
-
-        i = i+1
-        if i > 500{
-            break
-        }
-    }
 }
 
 fillTriangle(x1, y1, x2, y2, x3, y3, col, sa) = {
@@ -27,7 +14,7 @@ fillTriangle(x1, y1, x2, y2, x3, y3, col, sa) = {
     loop {
         a = x3
         b = y3
-        drawLine(x, y, a, b, col)
+        drawLine([x, y], [a, b], col, 500)
         x = x + dx
         y = y + dy
         i = i+1
@@ -43,7 +30,7 @@ fillTriangle(x1, y1, x2, y2, x3, y3, col, sa) = {
     loop {
         a = x1
         b = y1
-        drawLine(x, y, a, b, col)
+        drawLine([x, y], [a, b], col, 500)
         x = x + dx
         y = y + dy
         i = i+1
@@ -62,7 +49,7 @@ fillTriangle(x1, y1, x2, y2, x3, y3, col, sa) = {
     loop {
         a = x2
         b = y2
-        drawLine(x, y, a, b, col)
+        drawLine([x, y], [a, b], col, 500)
         x = x + dx
         y = y + dy
         i = i+1

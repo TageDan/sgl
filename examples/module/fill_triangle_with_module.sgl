@@ -6,7 +6,7 @@ SCREEN_GRIDSIZE = 3
 SCREEN_CLEAR_DELAY = 0.05
 
 #FUNCTIONS#
-import("std")
+import("std/math")
 import("./examples/module/my_module")
 
 ry() = {

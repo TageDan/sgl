@@ -1,0 +1,18 @@
+drawLine(p1, p2, col, steps) = {
+    x1 = p1[0]
+    x2 = p2[0]
+    y1 = p1[1]
+    y2 = p2[1]
+    dx = (x2 - x1)/steps
+    dy = (y2 - y1)/steps
+    i = 0
+    loop {
+
+        draw(x1+dx*i, y1+dy*i, col)
+
+        i = i+1
+        if i > steps{
+            break
+        }
+    }
+}
