@@ -1,0 +1,167 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* This ensures the content is centered vertically on the page */
+            margin: 0; /* Removes default margin */
+            background-color: #f5f5dc;
+        }
+
+        /* Add additional styles for your content here */
+    </style>
+</head>
+<body >
+    <canvas id = "CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME" width= "900" height = "900"></canvas>
+
+    <script>
+    SCREEN_HEIGHT = 300.0
+    SCREEN_GRIDSIZE = 3.0
+    SCREEN_WIDTH = 300.0
+    SCREEN_BG = [0, 0, 0]
+    SCREEN_CLEAR_DELAY = 0.05
+
+    CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME = document.getElementById('CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME').getContext('2d');
+
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay*1000))
+
+    function draw(x, y, col){
+        DRAWXVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(x)
+        DRAWYVARHOPEFULLYNOONEUSESTHISNAME = Math.floor(y)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+col[0]+','+col[1]+','+col[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(DRAWXVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,DRAWYVARHOPEFULLYNOONEUSESTHISNAME*SCREEN_GRIDSIZE,SCREEN_GRIDSIZE,SCREEN_GRIDSIZE)
+    }
+
+    async function clear(){
+        await sleep(SCREEN_CLEAR_DELAY)
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillStyle = 'rgb('+SCREEN_BG[0]+','+SCREEN_BG[1]+','+SCREEN_BG[2]+')'
+        CANVASIDHOPFULLYNOONEUSESTHISASVARIABLEORFUNCTIONNAME.fillRect(0,0,SCREEN_WIDTH*SCREEN_GRIDSIZE,SCREEN_HEIGHT*SCREEN_GRIDSIZE)
+    }
+
+    function clone(l) {
+        return JSON.parse(JSON.stringify(l));
+    }
+
+    function length(l) {
+        if ("object" == typeof l) {
+            return l.length
+        }
+        else {
+            return null
+        }
+    }
+function min(a,b){
+if(a>b){
+return b
+}return a
+}
+function max(a,b){
+if(a<b){
+return b
+}return a
+}
+function sin(X){
+let x=X
+while(true){
+if(x>=0){
+break
+}x=6.28+x
+}x=x%6.28
+x=x*360/6.28
+if(x>=180){
+return (-(4*(x-180)*(180-(x-180))))/(40500-(x-180)*(180-(x-180)))
+}return ((4*x*(180-x))/(40500-x*(180-x)))
+}
+function cos(X){
+let ret=sin(3.14/2-X)
+return ret
+}
+function lerpStp(x,target,itr){
+return (target-x)/itr
+}
+function drawLine(x1,y1,x2,y2,col){
+let dx=lerpStp(x1,x2,500)
+let dy=lerpStp(y1,y2,500)
+let i=0
+while(true){
+draw(x1+dx*i,y1+dy*i,col)
+i=i+1
+if(i>500){
+break
+}}}
+function fillTriangle(x1,y1,x2,y2,x3,y3,col,sa){
+let itr=sa
+let i=1
+let x=x1
+let y=y1
+let dx=lerpStp(x,x2,itr)
+let dy=lerpStp(y,y2,itr)
+while(true){
+let a=x3
+let b=y3
+drawLine(x,y,a,b,col)
+x=x+dx
+y=y+dy
+i=i+1
+if(i>=itr){
+break
+}}i=1
+x=x2
+y=y2
+dx=lerpStp(x,x3,itr)
+dy=lerpStp(y,y3,itr)
+while(true){
+a=x1
+b=y1
+drawLine(x,y,a,b,col)
+x=x+dx
+y=y+dy
+i=i+1
+if(i>=itr){
+break
+}}i=1
+x=x3
+y=y3
+dx=lerpStp(x,x1,itr)
+console.log(x)
+console.log(x1)
+console.log(dx)
+dy=lerpStp(y,y1,itr)
+while(true){
+a=x2
+b=y2
+drawLine(x,y,a,b,col)
+x=x+dx
+y=y+dy
+i=i+1
+if(i>=itr){
+break
+}}return 0
+}
+function ry(){
+return (Math.random()*SCREEN_HEIGHT)
+}
+function rx(){
+return (Math.random()*SCREEN_WIDTH)
+}
+
+ const THISISTHEMAINFUNCTION = async () => {
+ await clear() 
+await clear()
+ts=10
+while(true){
+fillTriangle(rx(),ry(),rx(),ry(),rx(),ry(),[Math.random()*255,Math.random()*255,Math.random()*255],Math.random()*30+5)
+ts=ts-1
+if(ts==0){
+break
+}}} 
+ THISISTHEMAINFUNCTION()</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from lexer import Token, tokenType
+from lexer import Token, tokenType, Lexer
 import sys
 from gen import Generator
 
@@ -76,7 +76,9 @@ class Parser:
         self.nextToken()
         while self.curToken.type != tokenType.SECTION:
             self.NL()
-            if self.curToken.type == tokenType.NAME:
+            if self.curToken.type == tokenType.IMPORT:
+                self.IMPORT()
+            elif self.curToken.type == tokenType.NAME:
                 self.functionDeclaration()
             elif self.curToken.type == tokenType.SECTION:
                 self.generator.buffer_to_body()
@@ -214,7 +216,9 @@ class Parser:
         self.NL()
         
     def expression(self):
-        if self.curToken.type == tokenType.LEFT_SQUARE:
+        if self.curToken.type == tokenType.STRING:
+            self.string()
+        elif self.curToken.type == tokenType.LEFT_SQUARE:
             self.list()
         else:
             self.unary()
@@ -223,6 +227,12 @@ class Parser:
                 self.nextToken()
                 self.unary()
         
+    def string(self):
+        self.generator.write_to_buffer('"')
+        self.writeCurToBuf()
+        self.generator.write_to_buffer('"')
+        self.nextToken()
+
     def unary(self):
         neg = False
         if self.curToken.type == tokenType.MINUS:
@@ -391,11 +401,7 @@ class Parser:
             self.abort("Expected left paren for print statement")
         self.writeCurToBuf()
         self.nextToken()
-        if self.curToken.type == tokenType.STRING:
-            self.writeCurToBuf()
-            self.nextToken()
-        else:
-            self.expression()
+        self.expression()
         if self.curToken.type != tokenType.RIGHT_PAREN:
             self.abort("Expected right paren for print statement, (print takes exactly 1 params)")
         self.writeCurToBuf()
@@ -447,9 +453,20 @@ class Parser:
         self.writeCurToBuf()
         self.NL()
 
-    
-            
+    def IMPORT(self):
+        self.nextToken()
+        if self.curToken.type != tokenType.LEFT_PAREN:
+            self.abort("Expected left paren in import statement")
+        self.nextToken()
+        if self.curToken.type != tokenType.STRING:
+            self.abort("Expected string containing sgmod to import")
+        lexer = Lexer(self.curToken.literal + ".sgmod")
+        self.nextToken()
+        if self.curToken.type != tokenType.RIGHT_PAREN:
+            self.abort("Expected right paren in import statement") 
+        self.tokens = self.tokens[:self.curPos + 1] + [Token(tokenType.NEWLINE, "\n")] + lexer.tokenize() + [Token(tokenType.NEWLINE, "\n")] + self.tokens[self.curPos + 1:]
+        self.nextToken()
             
 
     def abort(self, message):
-        sys.exit("Parser Error: "+message+" : line " + str(self.line))
+        sys.exit("Parser Error: "+message+" : line " + str(self.line) + " at literal: '"+self.curToken.literal+"'")

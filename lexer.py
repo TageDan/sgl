@@ -43,6 +43,7 @@ class tokenType(enum.Enum):
     PUSH = 207
     PRINT = 208
     SLEEP = 209
+    IMPORT = 210
     
 
 class Token:
@@ -160,6 +161,13 @@ class Lexer:
                 literal += self.curChar
             self.nextChar()
             token = Token(tokenType.SECTION, literal)
+        elif self.curChar in ["'", '"']:
+            literal = ""
+            while self.peek() not in ["'", '"']:
+                self.nextChar()
+                literal += self.curChar
+            self.nextChar()
+            token = Token(tokenType.STRING, literal)
 
         else:
             self.abort("Unkown token: "+ self.curChar)

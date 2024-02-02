@@ -1,0 +1,37 @@
+#CONFIG#
+SCREEN_HEIGHT = 300
+SCREEN_WIDTH = 300
+SCREEN_BG = [0, 0, 0]
+SCREEN_GRIDSIZE = 3
+SCREEN_CLEAR_DELAY = 0.05
+
+#FUNCTIONS#
+import("std")
+import("./examples/module/my_module")
+
+ry() = {
+    (random()*SCREEN_HEIGHT)
+}
+
+rx() = {
+    (random()*SCREEN_WIDTH)
+}
+
+
+#MAIN#
+
+
+
+clear()
+
+ts = 10
+
+loop{
+    fillTriangle(rx(), ry(), rx(), ry(), rx(), ry(), [random()*255, random()*255, random()*255], random()*30+5)
+
+    ts = ts-1
+    if ts == 0 {
+        break
+    }
+}
+

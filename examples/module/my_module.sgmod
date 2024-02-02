@@ -1,37 +1,3 @@
-#CONFIG#
-SCREEN_HEIGHT = 300
-SCREEN_WIDTH = 300
-SCREEN_BG = [0, 0, 0]
-SCREEN_GRIDSIZE = 3
-SCREEN_CLEAR_DELAY = 0.05
-
-#FUNCTIONS#
-
-appr(v) = {
-    (4*v*(180-v))/(40500-v*(180-v))
-}
-
-sin(X) = {
-    x = X
-    loop {
-        if x >= 0 {
-            break
-        }
-        x = 6.28 + x
-    }
-    x = x%6.28
-    x = x*360/6.28
-    if x >= 180{
-        -appr(x-180)
-    }
-    (appr(x))
-}
-
-cos(X) = {
-    ret = sin(3.14/2-X)
-    ret
-}
-
 lerpStp(x, target, itr) = {
     (target - x)/itr
 }
@@ -106,31 +72,3 @@ fillTriangle(x1, y1, x2, y2, x3, y3, col, sa) = {
     }
     0
 }
-
-ry() = {
-    (random()*SCREEN_HEIGHT)
-}
-
-rx() = {
-    (random()*SCREEN_WIDTH)
-}
-
-
-#MAIN#
-
-
-
-clear()
-
-ts = 10
-
-loop{
-    fillTriangle(rx(), ry(), rx(), ry(), rx(), ry(), [random()*255, random()*255, random()*255], random()*30+5)
-
-    ts = ts-1
-    if ts == 0 {
-        break
-    }
-}
-
-
