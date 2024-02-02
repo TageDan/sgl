@@ -7,7 +7,7 @@ SCREEN_CLEAR_DELAY = 0.05
 
 #FUNCTIONS#
 import("std/math")
-import("./examples/module/my_module")
+import("examples/module/my_module")
 
 ry() = {
     (random()*SCREEN_HEIGHT)
