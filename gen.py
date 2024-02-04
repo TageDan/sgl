@@ -90,6 +90,9 @@ class Generator:
         if ("object" == typeof l) {'{'}
             return l.length
         {'}'}
+        if ("string" == typeof l) {'{'}
+            return l.length
+        {'}'}
         else {'{'}
             return null
         {'}'}

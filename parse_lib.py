@@ -1,8 +1,8 @@
 from lexer import Token, tokenType, Lexer
 import sys
-import compile_lib
 
-class Parser:
+
+class Lib_Parser:
     def __init__(self, tokens, generator):
         self.tokens = tokens
         self.curToken: Token
@@ -31,48 +31,10 @@ class Parser:
             self.nextToken()
             self.line += 1
 
-    def program(self):
-        self.nextToken()
-        while self.curPos < len(self.tokens):
-            self.NL()
-            if self.curToken.type != tokenType.SECTION:
-                self.abort("Excpected section declaration!")
-            elif self.curToken.literal == "FUNCTIONS":
-                self.section = "FUNCTIONS"
-                self.generator.set_section("FUNCTIONS")
-                self.functions()
-            elif self.curToken.literal == "CONFIG":
-                self.section = "CONFIG"
-                self.generator.set_section("CONFIG")
-                self.config()
-            elif self.curToken.literal == "MAIN":
-                self.section = "MAIN"
-                self.generator.set_section("MAIN")
-                self.main()
-        
-    def config(self):
-        self.nextToken()
-        while self.curToken.type != tokenType.SECTION:
-            self.NL()
-            if self.curToken.type not in [tokenType.NAME, tokenType.SECTION]:
-                self.abort("Expected declaration in config")
-            if self.curToken.type == tokenType.SECTION:
-                # self.generator.buffer_to_body()
-                continue
-            self.declaration()
-
-    def main(self):
-        self.nextToken()
-        while self.curToken.type != tokenType.SECTION:
-            self.NL()
-            self.statement()
-
     def writeCurToBuf(self):
         self.generator.write_to_buffer(self.curToken.literal)
 
     def functions(self):
-        if self.peek().type != tokenType.NEWLINE:
-            self.abort("Expected newline after section declaration")
         self.nextToken()
         while self.curToken.type != tokenType.SECTION:
             self.NL()
@@ -452,20 +414,6 @@ class Parser:
             self.abort("Expected newline after sleep")
         self.writeCurToBuf()
         self.NL()
-
-    def IMPORT(self):
-        self.nextToken()
-        if self.curToken.type != tokenType.LEFT_PAREN:
-            self.abort("Expected left paren in import statement")
-        self.nextToken()
-        if self.curToken.type != tokenType.STRING:
-            self.abort("Expected string containing sgmod to import")
-        imported_functions = compile_lib.comp(self.curToken.literal+".sgmod")
-        self.generator.functionbody += "\n"+imported_functions+"\n"
-        self.nextToken()
-        if self.curToken.type != tokenType.RIGHT_PAREN:
-            self.abort("Expected right paren in import statement") 
-        self.nextToken()
             
 
     def abort(self, message):
