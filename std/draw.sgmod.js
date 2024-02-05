@@ -12,7 +12,9 @@ i=i+1
 if(i>steps){
 break
 }}}
-function drawChar(x,y,c,col){
+function drawChar(pos,c,col){
+let x=pos[0]
+let y=pos[1]
 let m=[]
 if(c=="A"){
 m=[[0,1,1,0],[1,0,0,1],[1,1,1,1],[1,0,0,1],[1,0,0,1]]

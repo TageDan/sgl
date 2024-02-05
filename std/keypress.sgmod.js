@@ -30,6 +30,16 @@ function keyPressed(s){
     }
 }
 
+function getPressedKeys(){
+    ret = []
+    chackablekeyboardCharacters.forEach(char =>{
+        if (chackablekeyboardCharactersvalue[char] == 1){
+            ret.push(char)
+        }
+    })
+    return ret
+}
+
 window.addEventListener("keydown", (e)=> {
     chackablekeyboardCharactersvalue[e.key] = 1
 }, false)

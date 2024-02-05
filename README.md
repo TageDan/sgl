@@ -200,12 +200,61 @@ print(floor((x+1)/3))
 print(floor(x/y))
 ```
 
+
+
+#### clone
+    clones a list without reference to it.
+
+    Example:
+    ```
+    list = [0,255,0]
+    list_a = list
+    list_b = clone(list)
+    list[0] = 255
+    list[1] = 0
+    draw(0,0,list_a)
+    draw(1,0,list_b)
+    ```
+    this will draw a red pixel at (0,0), becuase when we changed list we also changed the value of the reference to the list (list_a), and a green pixel at (1,0), becuase we made a independent clone of the list and stored it in "list_b"
+
+#### push
+    push takes two arguments: list to append to, and item to append, and it will add the item to the end of the list.
+
+    Example: 
+    ```
+    list = [0,1,2,3]
+    push(list, 4)
+    push(list, 4+1)
+    print(list)
+    ```
+
+    will output [0,1,2,3,4,5] to the console.
+
+### Modules
+
+#### How to use modules
+
+You can create your own modules or use the standard ones using import in the functions section. To create a module, create a "your_module_name.sgmod" file and then write functions to it. these functions are then usable when you import the file. You can also create a "your_module_name.sgmod.js" (since sgl/sgmod compiles to js) if you wish to add functionality outside the scope of sgl. (or if you prefer using js to write your functions and sgl for the config/main sections)
+
+Example:
+```
+#FUNCTIONS#
+import("std/draw")
+import("std/keypress")
+
+#FUNCTIONS#
+loop {
+    clear()
+    
+}
+```
+
 ## What's Coming
-* A Online compiler
-* Actually useful lists
-* A sleep method (delay without clear)
-* Module functionality
-* Standard library
+* A Online compiler - Done
+* Actually useful lists - Done
+* A sleep method (delay without clear) - Done
+* Module functionality - Done
+* Standard library - In progress
 
 ## Quick start
 

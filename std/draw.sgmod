@@ -17,7 +17,9 @@ drawLine(p1, p2, col, steps) = {
     }
 }
 
-drawChar(x,y,c,col) = {
+drawChar(pos,c,col) = {
+x = pos[0]
+y = pos[1]
  m = []
     if c == "A"{
         m = [[0,1,1,0], [1,0,0,1], [1,1,1,1], [1,0,0,1], [1,0,0,1]]

@@ -10,7 +10,10 @@ def main():
     gen = Generator(p+".html")
     tokens = lex.tokenize()
     parse = Parser(tokens, gen)
-    parse.program()
-
+    try:
+        parse.program()
+    except SystemExit as e:
+        print(e)
+        
 if __name__ == "__main__":
     main()
