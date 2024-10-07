@@ -284,7 +284,7 @@ Then create a function for drawing a square.
 To do this we will start by drawing the upper line like this:
 ```
 #FUNCTIONS#
-drawSquare(x0 y0 w h) = {
+drawSquare(x0, y0, w, h) = {
     x = x0
     y = y0
     x1 = x0+w
@@ -293,7 +293,7 @@ drawSquare(x0 y0 w h) = {
         if x >= x1 {
             break
         }
-        draw(x y [255 255 255])
+        draw(x, y, [255, 255, 255])
         x += 0.5
     }
 }
